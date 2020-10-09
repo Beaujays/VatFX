@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/VatFXDemo.iml" filepath="$PROJECT_DIR$/VatFXDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VatFX.iml" filepath="$PROJECT_DIR$/VatFX.iml" />
     </modules>
   </component>
 </project>

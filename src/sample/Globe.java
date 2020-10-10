@@ -1,9 +1,6 @@
-
 package sample;
 
 public class Globe extends Shape {
-    private String name;
-    private String shape;
     private int radius;
 
     public Globe(String name, String shape, int radiusInt){
@@ -13,10 +10,6 @@ public class Globe extends Shape {
     public double calculateGlobe(){
         return ((4.0/3.0) * Math.PI * Math.pow(radius, 3));
     }
-
-    public String getName() { return name; }
-
-    public String getShape() { return shape; }
 
     public int getRadius() { return radius; }
 

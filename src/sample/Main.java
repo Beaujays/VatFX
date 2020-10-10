@@ -32,6 +32,8 @@ public class Main extends Application {
         InputViewGlobe inputViewGlobe = new InputViewGlobe(shapes);
         InputViewCube inputViewCube = new InputViewCube(shapes);
         SearchView searchView = new SearchView(shapes);
+        ImportFileView importFile = new ImportFileView(shapes);
+        ExportFileView exportFile = new ExportFileView(shapes);
 
         // 3. Create the higher level layout
         BorderPane layout = new BorderPane();
@@ -54,15 +56,20 @@ public class Main extends Application {
         menuBar.getMenus().addAll(menuAdd);
 
         Button searchButton = new Button("Search");
+        Button importButton = new Button("Import file");
+        Button exportButton = new Button("Export file");
+
 
         // 3.3. Add the buttons to the menu
-        menu.getChildren().addAll(menuBar, searchButton);
+        menu.getChildren().addAll(menuBar, searchButton, importButton, exportButton);
         layout.setTop(menu);
 
         // 4. Connect the subviews with the buttons. Clicking menu buttons changes the subview.
         addGlobe.setOnAction((event) -> layout.setCenter(inputViewGlobe.getView()));
         addCube.setOnAction((event) -> layout.setCenter(inputViewCube.getView()));
         searchButton.setOnAction((event) -> layout.setCenter(searchView.getView()));
+        importButton.setOnAction((event)-> layout.setCenter(importFile.getView()));
+        exportButton.setOnAction((event) -> layout.setCenter(exportFile.getView()));
 
         // 5. First show the input view
         //layout.setCenter(inputView.getView());

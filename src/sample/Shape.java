@@ -1,14 +1,14 @@
-
 package sample;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Shape implements ShapeInterface {
@@ -64,18 +64,15 @@ public class Shape implements ShapeInterface {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
  */
     }
 
     @Override
     public String search(String name, String shape) {
-        /*
         Optional<Shape> found = shapeList.stream().filter(p -> p.getName().equals(name)).findFirst();
         Shape result = found.isEmpty() ? null : found.get();
 
         System.out.println(result==null ? "No globe found " : "found: " + result);
-         */
 
         String query = "SELECT * FROM vat." + shape + " WHERE name = '" + name + "'";
         try (Connection conn = MySQLJDBCUtil.getConnection()) {
@@ -85,12 +82,13 @@ public class Shape implements ShapeInterface {
 
             while (rs.next()) {
                 switch (shape) {
-                    case "globe":
+                    case "globe" -> {
                         String nameGlobe = rs.getString("name");
                         int radius = rs.getInt("radius");
                         double calculateGlobe = ((4.0 / 3.0) * Math.PI * Math.pow(radius, 3));
                         return "\nName: " + nameGlobe + ". Radius: " + radius + "\nTotal volume: " + calculateGlobe;
-                    case "cube":
+                    }
+                    case "cube" -> {
                         String nameCube = rs.getString("name");
                         int length = rs.getInt("length");
                         int height = rs.getInt("height");
@@ -98,6 +96,7 @@ public class Shape implements ShapeInterface {
                         double calculateCube = length * height * depth;
                         return "Name: " + nameCube + ". length: " + length + ". height:"
                                 + height + ". depth:" + depth + "\nTotal volume: " + calculateCube;
+                    }
                 }
             }
         } catch (SQLException ex) {
@@ -116,12 +115,13 @@ public class Shape implements ShapeInterface {
 
             while (rs.next()) {
                 switch (shape) {
-                    case "globe":
+                    case "globe" -> {
                         String nameGlobe = rs.getString("name");
                         int radius = rs.getInt("radius");
                         double calculateGlobe = ((4.0 / 3.0) * Math.PI * Math.pow(radius, 3));
                         return "\nName: " + nameGlobe + ", Radius: " + radius + "\nTotal volume: " + calculateGlobe;
-                    case "cube":
+                    }
+                    case "cube" -> {
                         String nameCube = rs.getString("name");
                         int length = rs.getInt("length");
                         int height = rs.getInt("height");
@@ -129,6 +129,7 @@ public class Shape implements ShapeInterface {
                         double calculateCube = length * height * depth;
                         return "Name: " + nameCube + ", length: " + length + ", height:"
                                 + height + ", depth:" + depth + "\nTotal volume: " + calculateCube;
+                    }
                 }
             }
         } catch (SQLException ex) {
@@ -156,4 +157,127 @@ public class Shape implements ShapeInterface {
         shapeList.clear();
         System.out.println("All globes deleted");
     }
+
+    public String importFile(String file) {
+
+        try (Scanner readFile = new Scanner(Paths.get(String.valueOf(file)))) {
+            while (readFile.hasNextLine()) {
+
+                String line = readFile.nextLine();
+                String[] parts = line.split(";");
+                if (parts[1].contains("cube")) {
+                    String name = parts[0];
+                    String shape = parts[1];
+                    int length = Integer.parseInt(parts[2]);
+                    int depth = Integer.parseInt(parts[3]);
+                    int height = Integer.parseInt(parts[4]);
+
+                    try (Connection conn = MySQLJDBCUtil.getConnection()) {
+                        String query = "insert into vat.cube (name, length,height, depth) " +
+                                "values ('" + name + "','" + length + "','" + height + "','" + depth + "')";
+                        Statement stmt = conn.createStatement();
+                        stmt.execute(query);
+                    } catch (SQLException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    shapeList.add(new Cube(name, shape, length, height, depth));// remove after implement mySQL
+                } else if (parts[1].contains("globe")) {
+                    String name = parts[0];
+                    String shape = parts[1];
+                    int globeRadius = Integer.parseInt(parts[2]);
+
+                    try (Connection conn = MySQLJDBCUtil.getConnection()) {
+                        String query = "insert into vat.globe (name, radius) " +
+                                "values ('" + name + "','" + globeRadius + "')";
+                        Statement stmt = conn.createStatement();
+                        stmt.execute(query);
+                    } catch (SQLException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    shapeList.add(new Globe(name, shape, globeRadius));// remove after implement mySQL
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Couldn't find file: '" + file + "'.");
+        }
+        return "Added file '" + file + "'.";
+    }
+
+    @Override
+    public String exportFile(String shape) {
+
+        String csvFileName = getFileName(shape.concat("_Export"));
+
+        try (Connection conn = MySQLJDBCUtil.getConnection()) {
+            String query = "SELECT * FROM vat." + shape + "";
+            Statement stmt = conn.createStatement();
+            stmt.execute(query);
+
+            ResultSet result = stmt.executeQuery(query);
+
+            BufferedWriter fileWriter = new BufferedWriter(new FileWriter(csvFileName));
+
+            int columnCount = writeHeaderLine(result);
+
+            while (result.next()) {
+                String line = "";
+
+                for (int i = 2; i <= columnCount; i++) {
+                    Object valueObject = result.getObject(i);
+                    String valueString = "";
+
+                    if (valueObject != null) valueString = valueObject.toString();
+
+                    if (valueObject instanceof String) {
+                        valueString = "\"" + escapeDoubleQuotes(valueString) + "\"";
+                    }
+
+                    line = line.concat(valueString);
+                    if (i != columnCount) {
+                        line = line.concat(",");
+                    }
+                }
+                fileWriter.newLine();
+                fileWriter.write(line);
+            }
+            stmt.close();
+            fileWriter.close();
+
+        } catch (SQLException e) {
+            System.out.println("Database error:");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("File IO error:");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String getFileName(String baseName) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateTimeInfo = dateFormat.format(new Date());
+        return baseName.concat(String.format("_%s.csv", dateTimeInfo));
+    }
+
+    private int writeHeaderLine(ResultSet result) throws SQLException {
+        // write header line containing column names
+        ResultSetMetaData metaData = result.getMetaData();
+        int numberOfColumns = metaData.getColumnCount();
+        String headerLine = "";
+
+        // exclude the first column which is the ID field
+        for (int i = 2; i <= numberOfColumns; i++) {
+            String columnName = metaData.getColumnName(i);
+            headerLine = headerLine.concat(columnName).concat(",");
+        }
+
+        //fileWriter.write(headerLine.substring(0, headerLine.length() - 1));
+
+        return numberOfColumns;
+    }
+
+    private String escapeDoubleQuotes(String value) {
+        return value.replaceAll("\"", "\"\"");
+    }
+    // endregion
 }

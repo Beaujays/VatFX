@@ -62,17 +62,6 @@ public class Shape implements ShapeInterface {
         for (Shape shapes : shapeList) {
             System.out.println("\t" + shapes);
         }
-        /*
-        try (Connection conn = MySQLJDBCUtil.getConnection()) {
-            String query = "insert into vat.globe (name, radius) " +
-                    "values ('" + name + "','" + radius + "')";
-            Statement stmt = conn.createStatement();
-            stmt.execute(query);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-         */
     }
 
     @Override

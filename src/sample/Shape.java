@@ -14,18 +14,22 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Shape implements ShapeInterface {
+    //region Variables
     String name;
     String shape;
     List<Shape> shapeList = new ArrayList<>();
+    //endregion
 
+    // region Constructors
     public Shape(String name, String shape) {
         this.name = name;
         this.shape = shape;
     }
 
-    public Shape() {
-    }
+    public Shape() { }
+    // endregion
 
+    // region Getters
     public String getName() {
         return name;
     }
@@ -33,6 +37,7 @@ public class Shape implements ShapeInterface {
     public String getShape() {
         return shape;
     }
+    //endregion
 
     @Override
     public boolean equals(Object o) {
@@ -57,7 +62,7 @@ public class Shape implements ShapeInterface {
         for (Shape shapes : shapeList) {
             System.out.println("\t" + shapes);
         }
-/*
+        /*
         try (Connection conn = MySQLJDBCUtil.getConnection()) {
             String query = "insert into vat.globe (name, radius) " +
                     "values ('" + name + "','" + radius + "')";
@@ -66,7 +71,8 @@ public class Shape implements ShapeInterface {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
- */
+
+         */
     }
 
     @Override
@@ -74,7 +80,7 @@ public class Shape implements ShapeInterface {
         Optional<Shape> found = shapeList.stream().filter(p -> p.getName().equals(name)).findFirst();
         Shape result = found.isEmpty() ? null : found.get();
 
-        System.out.println(result==null ? "No shape found " : "found: " + result);
+        System.out.println(result == null ? "No shape found " : "found: " + result);
 
         String query = "SELECT * FROM vat." + shape + " WHERE name = '" + name + "'";
         try (Connection conn = MySQLJDBCUtil.getConnection()) {
@@ -121,8 +127,9 @@ public class Shape implements ShapeInterface {
                         String nameGlobe = rs.getString("name");
                         int radius = rs.getInt("radius");
                         double calculateGlobe = ((4.0 / 3.0) * Math.PI * Math.pow(radius, 3));
-                        System.out.println("\nName: " + nameGlobe + ", Radius: " + radius +
-                                "\nTotal volume: " + calculateGlobe);
+                        System.out.println(nameGlobe + ";globe;" + radius);
+                        //System.out.println("\nName: " + nameGlobe + ", Radius: " + radius +
+                        //      "\nTotal volume: " + calculateGlobe);
                     }
                     case "cube" -> {
                         String nameCube = rs.getString("name");
@@ -130,7 +137,7 @@ public class Shape implements ShapeInterface {
                         int height = rs.getInt("height");
                         int depth = rs.getInt("depth");
                         double calculateCube = length * height * depth;
-                        System.out.println( "Name: " + nameCube + ", length: " + length + ", height:"
+                        System.out.println("Name: " + nameCube + ", length: " + length + ", height:"
                                 + height + ", depth:" + depth + "\nTotal volume: " + calculateCube);
                     }
                 }
@@ -141,6 +148,7 @@ public class Shape implements ShapeInterface {
         return null;
     }
 
+    // region Delete single row
     @Override
     public void delete(String name) {
         shapeList = shapeList.stream().filter(p -> !p.getName().equals(name)).collect(Collectors.toList());
@@ -154,6 +162,7 @@ public class Shape implements ShapeInterface {
             System.out.println(ex.getMessage());
         }
     }
+    //endregion
 
     @Override
     public void deleteAll() {
@@ -161,6 +170,7 @@ public class Shape implements ShapeInterface {
         System.out.println("All globes deleted");
     }
 
+    // region Import
     @Override
     public ArrayList<Shape> importFile(String file) {
         shapeList = new ArrayList<>();
@@ -211,7 +221,9 @@ public class Shape implements ShapeInterface {
         }
         return (ArrayList<Shape>) shapeList;
     }
+    // endregion
 
+    // region Export
     @Override
     public String exportFile(String shape) {
 

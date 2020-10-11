@@ -8,8 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-import javax.swing.*;
-
 public class ExportFileView {
 
     private final ShapeInterface shapes;
@@ -27,8 +25,21 @@ public class ExportFileView {
 
         Button addButton = new Button("Export file!");
         addButton.setOnAction((event) -> {
+            /*JFrame parentFrame = new JFrame();
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Specify a file to save");
+
+            int userSelection = fileChooser.showSaveDialog(parentFrame);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            }
+
+             */
             shapes.exportFile(nameField.getText());
-            message.setText("Export shape '" + nameField.getText() + "' successfully. \nIn map: "
+            message.setText("Export shape '" + nameField.getText() + "' successfully. \nSaved in map: "
                     + shapes.getDirectory());
             nameField.clear();
         });

@@ -8,7 +8,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-public class ImportFileView {
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+
+public class ImportFileView extends Component {
 
     private ShapeInterface shapes;
 
@@ -17,10 +21,27 @@ public class ImportFileView {
     }
 
     public Parent getView() {
+        String filename = "";
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Upload file");
+        chooser.setFileFilter(new FileNameExtensionFilter(".csv","csv"));
+
+        if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            filename = chooser.getSelectedFile().getName();
+            System.out.println("getCurrentDirectory(): "
+                    +  chooser.getCurrentDirectory());
+            System.out.println("getSelectedFile() : "
+                    +  chooser.getSelectedFile().getName());
+        }
+        else {
+            System.out.println("No Selection ");
+        }
+
         Label shapeText = new Label("Import file");
         shapeText.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
         Label nameText = new Label("Name file: ");
-        TextField nameField = new TextField();
+        TextField nameField = new TextField(filename);
         Label message = new Label();
 
         Button addButton = new Button("Import file!");
@@ -30,7 +51,8 @@ public class ImportFileView {
             nameField.clear();
         });
 
-        GridPane layout = new GridPane();
+
+    GridPane layout = new GridPane();
         layout.add(shapeText, 0, 0);
         layout.add(nameText, 0, 1);
         layout.add(nameField, 1, 1);

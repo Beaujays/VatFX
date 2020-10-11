@@ -16,26 +16,14 @@ public class SearchView {
     }
 
     public Parent getView() {
-        Label nameText = new Label("Name: ");
-        TextField nameField = new TextField("Leave empty to get all shapes");
+        Label nameText = new Label("Name: 'Leave empty to get all shapes'");
+        TextField nameField = new TextField("");
         Label shapeText = new Label("Choose shape:");
         ChoiceBox chooseShape = new ChoiceBox();
         chooseShape.getItems().add("cube");
         chooseShape.getItems().add("globe");
         Button getAll = new Button("Get all shapes");
-
         TableView tableView = new TableView();
-        TableColumn<String, Shape> Name = new TableColumn<>("Name");
-        TableColumn<String, Shape> value1 = new TableColumn<>("Value 1");
-        TableColumn<String, Shape> value2 = new TableColumn<>("Value 2");
-        TableColumn<String, Shape> value3 = new TableColumn<>("Value 3");
-
-        tableView.getColumns().add(Name);
-        tableView.getColumns().add(value1);
-        tableView.getColumns().add(value2);
-        tableView.getColumns().add(value3);
-
-
         Label found = new Label();
         found.setFont(new Font(16));
 
@@ -46,6 +34,18 @@ public class SearchView {
             found.setText("Found: " + shape);
         });
         getAll.setOnAction((event)->{
+
+            TableColumn<String, Shape> value1 = new TableColumn<>("Name");
+            TableColumn<String, Shape> value2 = new TableColumn<>("Value 1");
+            TableColumn<String, Shape> value3 = new TableColumn<>("Value 2");
+            TableColumn<String, Shape> value4 = new TableColumn<>("Value 3");
+
+            tableView.getColumns().add(value1);
+            tableView.getColumns().add(value2);
+            tableView.getColumns().add(value3);
+            tableView.getColumns().add(value4);
+
+
             ArrayList<Shape> shapeList = shapes.searchShape(String.valueOf(chooseShape.getValue()));
             found.setText("Found: " + shapeList);
         });

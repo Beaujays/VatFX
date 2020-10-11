@@ -8,6 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class InputViewGlobe {
 
     private final ShapeInterface shapes;
@@ -21,11 +25,21 @@ public class InputViewGlobe {
         TextField nameField = new TextField();
         Label radiusText = new Label("Radius: ");
         TextField radiusField = new TextField();
+        Label message = new Label("");
 
         Button addButton = new Button("Add globe!");
         addButton.setOnAction((event) -> {
             int radiusInt = Integer.parseInt(radiusField.getText());
             shapes.save(new Globe(nameField.getText(), shapeText.getText(), radiusInt));
+            try (Connection conn = MySQLJDBCUtil.getConnection()) {
+                String query = "insert into vat.globe (name, radius) " +
+                        "values ('" + nameField.getText() + "','" + radiusInt + "')";
+                Statement stmt = conn.createStatement();
+                stmt.execute(query);
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+            message.setText(nameField.getText() + " is added successfully.");
             nameField.clear();
             radiusField.clear();
         });
@@ -37,6 +51,7 @@ public class InputViewGlobe {
         layout.add(radiusText, 0, 2);
         layout.add(radiusField, 1, 2);
         layout.add(addButton, 1, 3, 2, 2);
+        layout.add(message,1,6);
 
         // Add some style to the ui
         layout.setHgap(10);

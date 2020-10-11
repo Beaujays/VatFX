@@ -1,6 +1,8 @@
 package sample;
 
+import javax.swing.*;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -72,7 +74,7 @@ public class Shape implements ShapeInterface {
         Optional<Shape> found = shapeList.stream().filter(p -> p.getName().equals(name)).findFirst();
         Shape result = found.isEmpty() ? null : found.get();
 
-        System.out.println(result==null ? "No globe found " : "found: " + result);
+        System.out.println(result==null ? "No shape found " : "found: " + result);
 
         String query = "SELECT * FROM vat." + shape + " WHERE name = '" + name + "'";
         try (Connection conn = MySQLJDBCUtil.getConnection()) {
@@ -106,7 +108,7 @@ public class Shape implements ShapeInterface {
     }
 
     @Override
-    public String searchShape(String shape) {
+    public ArrayList<Shape> searchShape(String shape) {
         String query = "SELECT * FROM vat." + shape + "";
         try (Connection conn = MySQLJDBCUtil.getConnection()) {
             Statement stmt = conn.createStatement();
@@ -119,7 +121,8 @@ public class Shape implements ShapeInterface {
                         String nameGlobe = rs.getString("name");
                         int radius = rs.getInt("radius");
                         double calculateGlobe = ((4.0 / 3.0) * Math.PI * Math.pow(radius, 3));
-                        return "\nName: " + nameGlobe + ", Radius: " + radius + "\nTotal volume: " + calculateGlobe;
+                        System.out.println("\nName: " + nameGlobe + ", Radius: " + radius +
+                                "\nTotal volume: " + calculateGlobe);
                     }
                     case "cube" -> {
                         String nameCube = rs.getString("name");
@@ -127,8 +130,8 @@ public class Shape implements ShapeInterface {
                         int height = rs.getInt("height");
                         int depth = rs.getInt("depth");
                         double calculateCube = length * height * depth;
-                        return "Name: " + nameCube + ", length: " + length + ", height:"
-                                + height + ", depth:" + depth + "\nTotal volume: " + calculateCube;
+                        System.out.println( "Name: " + nameCube + ", length: " + length + ", height:"
+                                + height + ", depth:" + depth + "\nTotal volume: " + calculateCube);
                     }
                 }
             }
@@ -158,7 +161,9 @@ public class Shape implements ShapeInterface {
         System.out.println("All globes deleted");
     }
 
-    public String importFile(String file) {
+    @Override
+    public ArrayList<Shape> importFile(String file) {
+        shapeList = new ArrayList<>();
 
         try (Scanner readFile = new Scanner(Paths.get(String.valueOf(file)))) {
             while (readFile.hasNextLine()) {
@@ -180,7 +185,7 @@ public class Shape implements ShapeInterface {
                     } catch (SQLException ex) {
                         System.out.println(ex.getMessage());
                     }
-                    shapeList.add(new Cube(name, shape, length, height, depth));// remove after implement mySQL
+                    shapeList.add(new Cube(name, shape, length, height, depth));
                 } else if (parts[1].contains("globe")) {
                     String name = parts[0];
                     String shape = parts[1];
@@ -194,13 +199,17 @@ public class Shape implements ShapeInterface {
                     } catch (SQLException ex) {
                         System.out.println(ex.getMessage());
                     }
-                    shapeList.add(new Globe(name, shape, globeRadius));// remove after implement mySQL
+                    shapeList.add(new Globe(name, shape, globeRadius));
                 }
             }
         } catch (IOException e) {
             System.out.println("Couldn't find file: '" + file + "'.");
         }
-        return "Added file '" + file + "'.";
+        System.out.println("List of shapes:");
+        for (Shape shapes : shapeList) {
+            System.out.println("\t" + shapes);
+        }
+        return (ArrayList<Shape>) shapeList;
     }
 
     @Override
@@ -251,6 +260,14 @@ public class Shape implements ShapeInterface {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public File getDirectory() {
+        JFileChooser chooser;
+        chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        return chooser.getCurrentDirectory();
     }
 
     private String getFileName(String baseName) {

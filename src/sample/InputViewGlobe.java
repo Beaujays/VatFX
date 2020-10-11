@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 
 public class InputViewGlobe {
 
-    private ShapeInterface shapes;
+    private final ShapeInterface shapes;
 
     public InputViewGlobe(ShapeInterface shapes) { this.shapes = shapes; }
 

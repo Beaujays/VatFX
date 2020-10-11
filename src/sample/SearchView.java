@@ -6,10 +6,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.ArrayList;
 
 public class SearchView {
-    private ShapeInterface shapes;
+    private final ShapeInterface shapes;
 
     public SearchView(ShapeInterface shapes) {
         this.shapes = shapes;
@@ -24,16 +24,29 @@ public class SearchView {
         chooseShape.getItems().add("globe");
         Button getAll = new Button("Get all shapes");
 
+        TableView tableView = new TableView();
+        TableColumn<String, Shape> Name = new TableColumn<>("Name");
+        TableColumn<String, Shape> value1 = new TableColumn<>("Value 1");
+        TableColumn<String, Shape> value2 = new TableColumn<>("Value 2");
+        TableColumn<String, Shape> value3 = new TableColumn<>("Value 3");
+
+        tableView.getColumns().add(Name);
+        tableView.getColumns().add(value1);
+        tableView.getColumns().add(value2);
+        tableView.getColumns().add(value3);
+
+
         Label found = new Label();
         found.setFont(new Font(16));
 
         Button searchButton = new Button("Search shape");
         searchButton.setOnAction((event) -> {
+
             String shape = shapes.search(String.valueOf(nameField.getText()),String.valueOf(chooseShape.getValue()));
             found.setText("Found: " + shape);
         });
         getAll.setOnAction((event)->{
-            String shapeList = shapes.searchShape(String.valueOf(chooseShape.getValue()));
+            ArrayList<Shape> shapeList = shapes.searchShape(String.valueOf(chooseShape.getValue()));
             found.setText("Found: " + shapeList);
         });
 
@@ -51,7 +64,8 @@ public class SearchView {
         layout.add(searchButton, 2, 1);
         layout.add(getAll,3,1);
         layout.add(found, 0, 3,3,3);
-        layout.add(deleteButton, 0, 6);
+        layout.add(deleteButton, 0, 12);
+        layout.add(tableView, 0,4,4,4);
 
 
         // Add some style to the ui

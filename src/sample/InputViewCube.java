@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 
 public class InputViewCube {
 
-    private ShapeInterface shapes;
+    private final ShapeInterface shapes;
 
     public InputViewCube(ShapeInterface shapes) { this.shapes = shapes; }
 

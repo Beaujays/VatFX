@@ -1,0 +1,16 @@
+.layout {
+-fx-background-color: LIGHTGRAY;
+}
+.searchButton {
+new ImageView("file:white-search-icon-png-27.jpg");
+-fx-background-color: WHITE;
+}
+
+.menu.setStyle {
+-fx-background-color: DARKOLIVEGREEN;
+}
+
+.menuBar {
+-fx-background-color: WHITE;
+setPadding(new Insets(13,13,13,13));
+}

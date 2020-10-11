@@ -21,10 +21,12 @@ public class ImportFileView {
         shapeText.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
         Label nameText = new Label("Name file: ");
         TextField nameField = new TextField();
+        Label message = new Label();
 
         Button addButton = new Button("Import file!");
         addButton.setOnAction((event) -> {
             shapes.importFile(nameField.getText());
+            message.setText(nameField.getText() + " is imported correctly.");
             nameField.clear();
         });
 
@@ -33,6 +35,7 @@ public class ImportFileView {
         layout.add(nameText, 0, 1);
         layout.add(nameField, 1, 1);
         layout.add(addButton, 1, 3, 2, 2);
+        layout.add(message, 1,5);
 
         // Add some style to the ui
         layout.setHgap(10);

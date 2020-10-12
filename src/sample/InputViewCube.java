@@ -8,15 +8,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 public class InputViewCube {
 
     private final ShapeInterface shapes;
 
-    public InputViewCube(ShapeInterface shapes) { this.shapes = shapes; }
+    public InputViewCube(ShapeInterface shapes) {
+        this.shapes = shapes;
+    }
 
     public Parent getView() {
         Label shapeText = new Label("Cube");
@@ -37,14 +35,7 @@ public class InputViewCube {
             int depthInt = Integer.parseInt(depthField.getText());
             int heightInt = Integer.parseInt(heightField.getText());
             shapes.save(new Cube(nameField.getText(), shapeText.getText(), lengthInt, depthInt, heightInt));
-            try (Connection conn = MySQLJDBCUtil.getConnection()) {
-                String query = "insert into vat.cube (name, length,height, depth) " +
-                        "values ('" + nameField.getText() + "','" + lengthInt + "','" + heightInt + "','" + depthInt + "')";
-                Statement stmt = conn.createStatement();
-                stmt.execute(query);
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
+            shapes.addCube(nameField.getText(), lengthInt, depthInt, heightInt);
             message.setText(nameField.getText() + " is added successfully.");
             nameField.clear();
             lengthField.clear();
@@ -63,7 +54,7 @@ public class InputViewCube {
         layout.add(heightText, 0, 4);
         layout.add(heightField, 1, 4);
         layout.add(addButton, 1, 5, 2, 2);
-        layout.add(message,1,8);
+        layout.add(message, 1, 8);
 
         // Add some style to the ui
         layout.setHgap(10);

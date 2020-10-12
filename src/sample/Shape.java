@@ -1,5 +1,14 @@
 package sample;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.util.Callback;
+
 import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -53,6 +62,7 @@ public class Shape implements ShapeInterface {
         return Objects.hash(name, shape, shapeList);
     }
 
+    //region Add shape
     @Override
     public void save(Shape shape) {
         System.out.println("Saved: " + shape);
@@ -63,6 +73,31 @@ public class Shape implements ShapeInterface {
             System.out.println("\t" + shapes);
         }
     }
+
+    @Override
+    public void addGlobe(String name, int radius) {
+        try (Connection conn = MySQLJDBCUtil.getConnection()) {
+            String query = "insert into vat.globe (name, radius) " +
+                    "values ('" + name + "','" + radius + "')";
+            Statement stmt = conn.createStatement();
+            stmt.execute(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void addCube(String name, int length, int depth, int height) {
+        try (Connection conn = MySQLJDBCUtil.getConnection()) {
+            String query = "insert into vat.cube (name, length,height, depth) " +
+                    "values ('" + name + "','" + length + "','" + height + "','" + depth + "')";
+            Statement stmt = conn.createStatement();
+            stmt.execute(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    //endregion
 
     @Override
     public String search(String name, String shape) {
@@ -137,6 +172,51 @@ public class Shape implements ShapeInterface {
         return null;
     }
 
+    @Override
+    public void buildData(String shape) {
+        TableView tableView = new TableView();
+        ObservableList<ObservableList> data;
+        String query = "SELECT * FROM vat." + shape + "";
+        data = FXCollections.observableArrayList();
+        try (Connection conn = MySQLJDBCUtil.getConnection()) {
+            Statement stmt = conn.createStatement();
+            stmt.execute(query);
+            ResultSet rs = stmt.getResultSet();
+            // TABLE COLUMN ADDED DYNAMICALLY
+            for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+                //We are using non property style for making dynamic table
+                final int j = i;
+                TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
+                col.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ObservableList, String>,
+                        ObservableValue<String>>) param ->
+                        new SimpleStringProperty(param.getValue().get(j).toString()));
+                tableView.getColumns().addAll(col);
+                System.out.println("Column [" + i + "] ");
+            }
+
+            //Data added to ObservableList *
+            while (rs.next()) {
+                //Iterate Row
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    //Iterate Column
+                    row.add(rs.getString(i));
+                }
+                System.out.println("Row [1] added " + row);
+                data.add(row);
+            }
+
+            //FINALLY ADDED TO TableView
+            tableView.setItems(data);
+        } catch (Exception e) {
+            Alert errorData = new Alert(Alert.AlertType.ERROR);
+            errorData.setTitle("Error Dialog");
+            errorData.setHeaderText("Error");
+            errorData.setContentText("Error on building data, please check if shape is selected");
+            errorData.showAndWait();
+        }
+    }
+
     // region Delete single row
     @Override
     public void delete(String name) {
@@ -154,9 +234,16 @@ public class Shape implements ShapeInterface {
     //endregion
 
     @Override
-    public void deleteAll() {
+    public void deleteAll(String shape) {
         shapeList.clear();
-        System.out.println("All globes deleted");
+        System.out.println("All shapes deleted");
+        try (Connection conn = MySQLJDBCUtil.getConnection()) {
+            String query = "DELETE FROM vat." + shape + "";
+            Statement stmt = conn.createStatement();
+            stmt.execute(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     // region Import
@@ -214,7 +301,7 @@ public class Shape implements ShapeInterface {
 
     // region Export
     @Override
-    public String exportFile(String shape) {
+    public void exportFile(String shape) {
 
         String csvFileName = getFileName(shape.concat("_Export"));
 
@@ -260,7 +347,6 @@ public class Shape implements ShapeInterface {
             System.out.println("File IO error:");
             e.printStackTrace();
         }
-        return null;
     }
 
     @Override

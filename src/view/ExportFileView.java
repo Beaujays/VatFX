@@ -1,4 +1,4 @@
-package sample;
+package view;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import service.ShapeInterface;
 
 public class ExportFileView {
 

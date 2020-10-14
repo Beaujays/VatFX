@@ -1,4 +1,4 @@
-package sample;
+package view;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -7,12 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import domain.Globe;
+import service.ShapeInterface;
 
-public class InputViewGlobe {
+public class InputGlobeView {
 
     private final ShapeInterface shapes;
 
-    public InputViewGlobe(ShapeInterface shapes) {
+    public InputGlobeView(ShapeInterface shapes) {
         this.shapes = shapes;
     }
 
@@ -28,8 +30,7 @@ public class InputViewGlobe {
         Button addButton = new Button("Add globe!");
         addButton.setOnAction((event) -> {
             int radiusInt = Integer.parseInt(radiusField.getText());
-            shapes.save(new Globe(nameField.getText(), shapeText.getText(), radiusInt));
-            shapes.addGlobe(nameField.getText(), radiusInt);
+            shapes.saveGlobe(new Globe(nameField.getText(), "globe", radiusInt));
             message.setText(nameField.getText() + " is added successfully.");
             nameField.clear();
             radiusField.clear();

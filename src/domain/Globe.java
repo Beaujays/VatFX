@@ -1,10 +1,15 @@
-package sample;
+package domain;
 
 public class Globe extends Shape {
     private int radius;
 
-    public Globe(String name, String shape, int radiusInt){
+    public Globe(String name, String shape, int radius){
         super(name, shape);
+        this.radius = radius;
+    }
+
+    public Globe(String name, int radius) {
+        super(name);
         this.radius = radius;
     }
 
@@ -16,8 +21,7 @@ public class Globe extends Shape {
 
     @Override
     public String toString() {
-        return "The volume of '" + name + "' is: " + calculateGlobe() + "m3" + ". Shape is: " + getShape() + "\n" +
-                "Radius: " + getRadius();
+        return name +" shape: " + shape + "( Radius: " + getRadius() + ", volume:" + calculateGlobe() + "m3";
     }
 
     @Override

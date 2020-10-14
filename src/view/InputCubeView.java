@@ -1,4 +1,4 @@
-package sample;
+package view;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -7,12 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import domain.Cube;
+import service.ShapeInterface;
 
-public class InputViewCube {
+public class InputCubeView {
 
     private final ShapeInterface shapes;
 
-    public InputViewCube(ShapeInterface shapes) {
+    public InputCubeView(ShapeInterface shapes) {
         this.shapes = shapes;
     }
 
@@ -34,8 +36,7 @@ public class InputViewCube {
             int lengthInt = Integer.parseInt(lengthField.getText());
             int depthInt = Integer.parseInt(depthField.getText());
             int heightInt = Integer.parseInt(heightField.getText());
-            shapes.save(new Cube(nameField.getText(), shapeText.getText(), lengthInt, depthInt, heightInt));
-            shapes.addCube(nameField.getText(), lengthInt, depthInt, heightInt);
+            shapes.saveCube(new Cube(nameField.getText(),"cube", lengthInt, depthInt, heightInt));
             message.setText(nameField.getText() + " is added successfully.");
             nameField.clear();
             lengthField.clear();

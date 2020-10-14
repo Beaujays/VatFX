@@ -1,17 +1,24 @@
-package sample;
+package domain;
 
-public class Cube extends Shape{
+public class Cube extends Shape {
 
     // region Parameters
-    private final int length;
-    private final int height;
-    private final int depth;
+    private int length;
+    private int height;
+    private int depth;
 
     // endregion
 
     // region Constructor
     public Cube (String name, String shape, int length, int height, int depth){
         super(name, shape);
+        this.length = length;
+        this.height = height;
+        this.depth = depth;
+    }
+
+    public Cube(String name, int length, int height, int depth) {
+        super(name);
         this.length = length;
         this.height = height;
         this.depth = depth;
@@ -39,8 +46,8 @@ public class Cube extends Shape{
 
     @Override
     public String toString() {
-        return "The volume of '" + name + "' is: " + calculateCube() + "m3" + ".Shape is: " + getShape() + "\n" +
-                "Length: " + getLength() + " Depth: " + getDepth() + " Height: " + getHeight();
+        return name + " shape: " + shape + "( length: " + getLength() + ", depth: " + getDepth() + ", height: "
+                + getHeight() + ", volume:" + calculateCube() + "m3";
     }
     // endregion
 }

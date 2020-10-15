@@ -21,7 +21,7 @@ public class Globe extends Shape {
 
     @Override
     public String toString() {
-        return name +" shape: " + shape + "( Radius: " + getRadius() + ", volume:" + calculateGlobe() + "m3";
+        return name + "( radius: " + getRadius() + ", volume:" + calculateGlobe() + "m3";
     }
 
     @Override

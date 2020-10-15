@@ -23,7 +23,6 @@ public class SearchView {
         ChoiceBox chooseShape = new ChoiceBox();
         chooseShape.getItems().add("cube");
         chooseShape.getItems().add("globe");
-        Button getAll = new Button("Get all shapes");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText("Delete a record");
@@ -36,6 +35,7 @@ public class SearchView {
             String chooseShapeStr = String.valueOf(chooseShape.getValue());
             Shape shape = shapes.search(chooseShapeStr, nameField.getText());
             found.setText("Found: " + shape);
+
         });
 
         Button deleteButton = new Button("Delete shape");
@@ -62,9 +62,8 @@ public class SearchView {
         layout.add(chooseShape, 0, 1);
         layout.add(nameText, 1, 0);
         layout.add(nameField, 1, 1);
-        layout.add(getSingle, 1, 2);
-        layout.add(getAll, 0, 2);
-        layout.add(found,0,5);
+        layout.add(getSingle, 2, 1);
+        layout.add(found,0,5,5,5);
         layout.add(deleteButton, 0, 12, 2, 2);
         layout.add(deleteAllButton, 1, 12, 2, 2);
 

@@ -41,4 +41,9 @@ public class Shape {
     public int hashCode() {
         return Objects.hash(name, shape);
     }
+
+    @Override
+    public String toString() {
+        return "'" + name + "'";
+    }
 }

@@ -48,43 +48,17 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
     //TODO
     @Override
     public Shape search(String shape, String name) {
-        /*
-        String query = "SELECT * FROM vat." + shape + " WHERE name = '" + name + "'";
-        try (Connection conn = MySQLJDBCUtil.getConnection()) {
-            Statement stmt = conn.createStatement();
-            stmt.execute(query);
-            ResultSet rs = stmt.getResultSet();
 
-            while (rs.next()) {
-                switch (shape) {
-                    case "globe":
-                        String nameGlobe = rs.getString("name");
-                        int radius = rs.getInt("radius");
-                        System.out.println("Name: " + nameGlobe + ". Radius: " + radius);
-                    case "cube":
-                        String nameCube = rs.getString("name");
-                        int length = rs.getInt("length");
-                        int height = rs.getInt("height");
-                        int depth = rs.getInt("depth");
+        return useStatement("SELECT * FROM vat." + shape + " WHERE name = ?", statement -> {
+            statement.setString(1, name);
 
-                        System.out.println("Name: " + nameCube + ". length: " + length + ". height:"
-                                + height + ". depth:" + depth);
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
-
-         */
-        return useStatement("select * from vat."+shape+" where name = '"+name+"'", statement -> {
-            //statement.setString(1, shape);
-            //statement.setString(2,name);
-
-            ResultSet resultSet = statement.executeQuery("select * from vat."+shape+" where name = '"+name+"'");
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return recordToEntity(resultSet);
+                if (shape.equals("globe")) {
+                    return recordToEntityGlobe(resultSet);
+                } else
+                    return recordToEntityCube(resultSet);
             } else {
                 return null;
             }
@@ -119,17 +93,22 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
 
     @Override
     public List<Shape> getAll() {
-        return useStatement("select name from vat.globe", statement -> {
-            ResultSet resultSet = statement.executeQuery("select name from vat.globe");
-            List<Shape> result = new ArrayList<>();
+        return useStatement("SELECT name, radius FROM vat.globe",
+                statement -> {
+                    ResultSet resultSet = statement.executeQuery();
+                    List<Shape> result = new ArrayList<>();
 
-            while (resultSet.next()) {
-                Shape shapes = recordToEntity(resultSet);
-                result.add(shapes);
-            }
+                    while (resultSet.next()) {
+                        //Globe globe = recordToEntityGlobe(resultSet);
+                        //Cube cube = recordToEntityCube(resultSet);
+                        Shape shapes = recordToEntity(resultSet);
+                        //result.add(globe);
+                        //result.add(cube);
+                        result.add(shapes);
+                    }
 
-            return result;
-        });
+                    return result;
+                });
     }
 
     // region Import
@@ -252,10 +231,27 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
     private String escapeDoubleQuotes(String value) {
         return value.replaceAll("\"", "\"\"");
     }
+    //endregion
 
+    //region Record to entity
     @Override
-    Shape recordToEntity(ResultSet resultSet) {
-        return null;
+    Shape recordToEntity(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("name");
+        return new Shape(name);
     }
-    // endregion
+
+    Globe recordToEntityGlobe(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("name");
+        int radius = resultSet.getInt("radius");
+        return new Globe(name, radius);
+    }
+
+    Cube recordToEntityCube(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("name");
+        int length = resultSet.getInt("length");
+        int height = resultSet.getInt("height");
+        int depth = resultSet.getInt("depth");
+        return new Cube(name, length, height, depth);
+    }
+    //endregion
 }

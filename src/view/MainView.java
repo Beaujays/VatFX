@@ -17,7 +17,7 @@ public class MainView {
     }
 
     public Node getView() {
-        Label text = new Label("HALLO");
+        Label text = new Label("Welcome");
         ListView<Shape> listview = new ListView<>();
         listview.setItems(FXCollections.observableList(shapeInterface.getAll()));
 
@@ -26,7 +26,8 @@ public class MainView {
 
         BorderPane layout = new BorderPane();
         layout.setRight(listview);
-        layout.setTop(text);
+        layout.setLeft(text);
+        layout.setLeft(refreshButton);
         return layout;
     }
 }

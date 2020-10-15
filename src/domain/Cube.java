@@ -46,7 +46,7 @@ public class Cube extends Shape {
 
     @Override
     public String toString() {
-        return name + " shape: " + shape + "( length: " + getLength() + ", depth: " + getDepth() + ", height: "
+        return name + "( length: " + getLength() + ", depth: " + getDepth() + ", height: "
                 + getHeight() + ", volume:" + calculateCube() + "m3";
     }
     // endregion

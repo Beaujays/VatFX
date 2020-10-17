@@ -1,8 +1,6 @@
 package service;
 
 import database.MySQLJDBCUtil;
-import domain.Cube;
-import domain.Globe;
 import domain.Shape;
 
 import javax.swing.*;
@@ -23,29 +21,31 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
 
     //region Add shape
     @Override
-    public void saveGlobe(Globe globe) {
-        useStatement("insert into vat.globe (name, radius) value(?,?)", statement -> {
-            statement.setString(1, globe.getName());
-            statement.setInt(2, globe.getRadius());
+    public void saveGlobe(String name, String shape, int value1) {
+        useStatement("insert into vat.globe (name, radius, volume) value(?,?,?)", statement -> {
+            statement.setString(1, name);
+            statement.setInt(2, value1);
+            statement.setDouble(3, (4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
 
             return statement.execute();
         });
     }
 
     @Override
-    public void saveCube(Cube cube) {
-        useStatement("insert into vat.cube value(null,?,?,?,?)", statement -> {
-            statement.setString(1, cube.getName());
-            statement.setInt(2, cube.getLength());
-            statement.setInt(3, cube.getDepth());
-            statement.setInt(4, cube.getHeight());
+    public void saveCube(String name, String shape, int value1, int value2, int value3) {
+        useStatement("insert into vat.cube (name, length, height, depth, volume) value(?,?,?,?,?)", statement -> {
+            statement.setString(1, name);
+            statement.setInt(2, value1);
+            statement.setInt(3, value2);
+            statement.setInt(4, value3);
+            statement.setInt(5, (value1 * value2 * value3));
 
             return statement.execute();
         });
     }
     //endregion
 
-    //TODO
+    //region Search Shape
     @Override
     public Shape search(String shape, String name) {
 
@@ -64,6 +64,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
             }
         });
     }
+    //endregion
 
     // region Delete data
     @Override
@@ -93,17 +94,13 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
 
     @Override
     public List<Shape> getAll() {
-        return useStatement("SELECT name, radius FROM vat.globe",
+        return useStatement("SELECT name, volume FROM vat.globe UNION ALL SELECT name, volume FROM vat.cube",
                 statement -> {
                     ResultSet resultSet = statement.executeQuery();
                     List<Shape> result = new ArrayList<>();
 
                     while (resultSet.next()) {
-                        //Globe globe = recordToEntityGlobe(resultSet);
-                        //Cube cube = recordToEntityCube(resultSet);
                         Shape shapes = recordToEntity(resultSet);
-                        //result.add(globe);
-                        //result.add(cube);
                         result.add(shapes);
                     }
 
@@ -124,19 +121,21 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
                     int length = Integer.parseInt(parts[2]);
                     int depth = Integer.parseInt(parts[3]);
                     int height = Integer.parseInt(parts[4]);
-                    useStatement("insert into vat.cube (name, length,height, depth) value(?,?,?,?)", statement -> {
+                    useStatement("insert into vat.cube (name, length,height, depth, volume) value(?,?,?,?,?,?)", statement -> {
                         statement.setString(1, name);
                         statement.setInt(2, length);
                         statement.setInt(3, height);
                         statement.setInt(4, depth);
+                        statement.setInt(5, (length * height * depth));
                         return statement.execute();
                     });
                 } else if (parts[1].contains("globe")) {
                     String name = parts[0];
                     int globeRadius = Integer.parseInt(parts[2]);
-                    useStatement("INSERT INTO vat.globe (name, radius) VALUE(?,?)", statement -> {
+                    useStatement("INSERT INTO vat.globe (name, radius, volume) VALUE(?,?,?)", statement -> {
                         statement.setString(1, name);
                         statement.setInt(2, globeRadius);
+                        statement.setDouble(3,(4.0 / 3.0) * Math.PI * Math.pow(globeRadius, 3));
                         return statement.execute();
                     });
                 }
@@ -237,21 +236,24 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
     @Override
     Shape recordToEntity(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
-        return new Shape(name);
+        int volume = resultSet.getInt("volume");
+        return new Shape(name, volume);
     }
 
-    Globe recordToEntityGlobe(ResultSet resultSet) throws SQLException {
+    Shape recordToEntityGlobe(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         int radius = resultSet.getInt("radius");
-        return new Globe(name, radius);
+        double calculate = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
+        return new Shape(name, "globe", radius, (int) calculate);
     }
 
-    Cube recordToEntityCube(ResultSet resultSet) throws SQLException {
+    Shape recordToEntityCube(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         int length = resultSet.getInt("length");
         int height = resultSet.getInt("height");
         int depth = resultSet.getInt("depth");
-        return new Cube(name, length, height, depth);
+        int calculate = length * height * depth;
+        return new Shape(name, "cube", length, height, depth, calculate);
     }
     //endregion
 }

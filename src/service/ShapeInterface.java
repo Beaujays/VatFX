@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface ShapeInterface {
     //region Add shape
-    void saveGlobe(Globe globe);
-    void saveCube(Cube cube);
+    void saveGlobe(String name, String shape, int value1);
+    void saveCube(String name, String shape, int value1, int value2, int value3);
     //endregion
 
     //region Search shape

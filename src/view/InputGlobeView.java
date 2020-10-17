@@ -2,12 +2,12 @@ package view;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import domain.Globe;
 import service.ShapeInterface;
 
 public class InputGlobeView {
@@ -29,11 +29,20 @@ public class InputGlobeView {
 
         Button addButton = new Button("Add globe!");
         addButton.setOnAction((event) -> {
-            int radiusInt = Integer.parseInt(radiusField.getText());
-            shapes.saveGlobe(new Globe(nameField.getText(), "globe", radiusInt));
-            message.setText(nameField.getText() + " is added successfully.");
-            nameField.clear();
-            radiusField.clear();
+            try {
+                int radiusInt = Integer.parseInt(radiusField.getText());
+                String nameStr = String.valueOf(nameField.getText());
+                String shapeStr = "globe";
+                shapes.saveGlobe(nameStr, shapeStr, radiusInt);
+                message.setText(nameField.getText() + " is added successfully.");
+                nameField.clear();
+                radiusField.clear();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Not all fields are filled in");
+                alert.showAndWait();
+            }
         });
 
         GridPane layout = new GridPane();

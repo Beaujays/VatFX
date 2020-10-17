@@ -2,6 +2,7 @@ package view;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -47,9 +48,18 @@ public class ImportFileView extends Component {
 
         Button addButton = new Button("Import file!");
         addButton.setOnAction((event) -> {
-            shapes.importFile(nameField.getText());
-            message.setText(nameField.getText() + " is imported correctly.");
-            nameField.clear();
+            try {
+                shapes.importFile(nameField.getText());
+                message.setText(nameField.getText() + " is imported correctly.");
+                nameField.clear();
+            } catch (Exception e){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Look, an Information Dialog");
+                alert.setContentText("I have a great message for you!");
+
+                alert.showAndWait();
+            }
         });
 
 

@@ -2,12 +2,12 @@ package view;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import domain.Cube;
 import service.ShapeInterface;
 
 public class InputCubeView {
@@ -33,15 +33,22 @@ public class InputCubeView {
 
         Button addButton = new Button("Add cube!");
         addButton.setOnAction((event) -> {
-            int lengthInt = Integer.parseInt(lengthField.getText());
-            int depthInt = Integer.parseInt(depthField.getText());
-            int heightInt = Integer.parseInt(heightField.getText());
-            shapes.saveCube(new Cube(nameField.getText(),"cube", lengthInt, depthInt, heightInt));
-            message.setText(nameField.getText() + " is added successfully.");
-            nameField.clear();
-            lengthField.clear();
-            depthField.clear();
-            heightField.clear();
+            try {
+                int lengthInt = Integer.parseInt(lengthField.getText());
+                int depthInt = Integer.parseInt(depthField.getText());
+                int heightInt = Integer.parseInt(heightField.getText());
+                shapes.saveCube(nameField.getText(), "cube", lengthInt, depthInt, heightInt);
+                message.setText(nameField.getText() + " is added successfully.");
+                nameField.clear();
+                lengthField.clear();
+                depthField.clear();
+                heightField.clear();
+            }catch (Exception e){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Not all fields are filled in");
+                alert.showAndWait();
+            }
         });
 
         GridPane layout = new GridPane();

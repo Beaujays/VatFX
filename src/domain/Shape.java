@@ -6,6 +6,10 @@ public class Shape {
     //region Variables
     String name;
     String shape;
+    int value1;
+    int value2;
+    int value3;
+    int value4;
     //endregion
 
     // region Constructors
@@ -14,9 +18,31 @@ public class Shape {
         this.shape = shape;
     }
 
+    public Shape(String name, int value1) {
+        this.name = name;
+        this.value1 = value1;
+    }
+
     public Shape(String name) {
         this.name = name;
     }
+
+    public Shape(String name, String shape, int value1, int value2) {
+        this.name = name;
+        this.shape = shape;
+        this.value1 = value1;
+        this.value2 = value2;
+    }
+
+    public Shape(String name, String shape, int value1, int value2, int value3, int value4) {
+        this.name = name;
+        this.shape = shape;
+        this.value1 = value1;
+        this.value2 = value2;
+        this.value3 = value3;
+        this.value4 = value4;
+    }
+
     // endregion
 
     // region Getters
@@ -24,9 +50,31 @@ public class Shape {
         return name;
     }
 
-    public String getShape() { return shape; }
+    public String getShape() {
+        return shape;
+    }
+
+    public int getValue1() {
+        return value1;
+    }
+
+    public int getValue2() {
+        return value2;
+    }
+
+    public int getValue3() {
+        return value3;
+    }
+
+    public int getValue4() {
+        return value4;
+    }
+
     //endregion
 
+    public double calculateGlobe() {
+        return ((4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -42,8 +90,19 @@ public class Shape {
         return Objects.hash(name, shape);
     }
 
+    //@Override
+
+
     @Override
     public String toString() {
-        return "'" + name + "'";
+        return "Name: " + name;
+    }
+
+    public String toStringGlobe() {
+            return "Name: " + name + "\nRadius: " + value1 +"\nVolume: " + value2;
+    }
+
+    public String toStringCube() {
+        return "Name: " + name + "\nLength: " + value1 + "\nHeight: " + value2 + "\nDepth: " + value3 + "\nVolume: " + value4;
     }
 }

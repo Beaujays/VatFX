@@ -2,9 +2,10 @@ package view;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import service.ShapeInterface;
@@ -18,41 +19,37 @@ public class ExportFileView {
     }
 
     public Parent getView() {
-        Label shapeText = new Label("Export file");
-        shapeText.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
-        Label nameText = new Label("Name shape: ");
-        TextField nameField = new TextField();
+        Label header = new Label("Export file");
+        header.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
+        Label nameText = new Label("Select shape ");
+        ChoiceBox chooseShape = new ChoiceBox();
+        chooseShape.getItems().add("cube");
+        chooseShape.getItems().add("globe");
         Label message = new Label();
 
         Button addButton = new Button("Export file!");
         addButton.setOnAction((event) -> {
-            /*JFrame parentFrame = new JFrame();
-
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setDialogTitle("Specify a file to save");
-
-            int userSelection = fileChooser.showSaveDialog(parentFrame);
-
-            if (userSelection == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-                System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            String chooseShapeStr = String.valueOf(chooseShape.getValue());
+            try {
+                shapes.exportFile(chooseShapeStr);
+                message.setText("Export shape '" + chooseShapeStr + "' successfully. \nSaved in map: "
+                        + shapes.getDirectory());
+            } catch (Exception e){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText("Look, an Information Dialog");
+                alert.setContentText("I have a great message for you!");
+                alert.showAndWait();
             }
-
-             */
-            shapes.exportFile(nameField.getText());
-            message.setText("Export shape '" + nameField.getText() + "' successfully. \nSaved in map: "
-                    + shapes.getDirectory());
-            nameField.clear();
         });
 
         GridPane layout = new GridPane();
-        layout.add(shapeText, 0, 0);
+        layout.add(header, 0, 0);
         layout.add(nameText, 0, 1);
-        layout.add(nameField, 1, 1);
-        layout.add(addButton, 1, 3, 2, 2);
-        layout.add(message, 1,5);
+        layout.add(chooseShape, 1, 1);
+        layout.add(addButton, 2, 1);
+        layout.add(message, 0,5,5,5);
 
-        // Add some style to the ui
         layout.setHgap(10);
         layout.setVgap(10);
         layout.setPadding(new Insets(10, 10, 10, 10));

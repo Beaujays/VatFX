@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -23,7 +24,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage window) throws Exception {
+    public void start(Stage window) {
 
         // 2. Create the views ("subviews")
         MainView mainView = new MainView(shapes);
@@ -65,9 +66,11 @@ public class Main extends Application {
         HBox rightButton = new HBox(searchButton);
         rightButton.setAlignment(Pos.TOP_RIGHT);
         HBox.setHgrow(rightButton, Priority.ALWAYS);
-        //searchButton.setGraphic(new ImageView("file:white-search-icon-png-27.jpg"));
-        searchButton.setStyle("-fx-background-color: WHITE;");
-        Button mainButton = new Button("Main");
+        searchButton.setGraphic(new ImageView("file:search.png"));
+        searchButton.setStyle("-fx-background-color: DARKGREY;");
+        Button mainButton = new Button();
+        mainButton.setGraphic(new ImageView("file:home.png"));
+        mainButton.setStyle("-fx-background-color: DARKGREY;");
         // 3.3. Add the buttons to the menu
         menu.getChildren().addAll(mainButton, menuBar, rightButton);
         layout.setTop(menu);

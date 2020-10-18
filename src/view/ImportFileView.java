@@ -49,9 +49,13 @@ public class ImportFileView extends Component {
         Button addButton = new Button("Import file!");
         addButton.setOnAction((event) -> {
             try {
-                shapes.importFile(nameField.getText());
-                message.setText(nameField.getText() + " is imported correctly.");
-                nameField.clear();
+                if (nameField.getText().isEmpty()) {
+                    message.setText("No file selected.");
+                } else {
+                    shapes.importFile(nameField.getText());
+                    message.setText(nameField.getText() + " is imported correctly.");
+                    nameField.clear();
+                }
             } catch (Exception e){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Dialog");

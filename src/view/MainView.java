@@ -1,14 +1,15 @@
 package view;
 
+import domain.Shape;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import domain.Shape;
-
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import service.ShapeInterface;
 
 public class MainView {
@@ -19,25 +20,39 @@ public class MainView {
     }
 
     public Node getView() {
+        Label selectedLabel = new Label("Name selected");
         TextField selectedItem = new TextField();
+        Label valueLabel = new Label("Volume of selected item");
         TextField value1 = new TextField();
+        Label totalLabel = new Label("Total volume of list in m3");
+        TextField totalField = new TextField();
 
-        Label text = new Label("Welcome");
+        Label text = new Label("Welcome\n\n");
+        text.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
         ListView<Shape> listview = new ListView<>();
         listview.setItems(FXCollections.observableList(shapeInterface.getAll()));
 
+        // Select item from listview
         listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Your action here
-            System.out.println("Selected item: " + newValue + " "+newValue.getValue1());
+            // Get values from selected item
+            System.out.println("Selected item: " + newValue + " " + newValue.getValue1());
             selectedItem.setText(String.valueOf(newValue.getName()));
             value1.setText(String.valueOf(newValue.getValue1()));
-
         });
-        GridPane layout = new GridPane();
-        layout.add(listview,1,5);
-        layout.add(text,0,0);
-        layout.add(selectedItem, 0,1);
-        layout.add(value1,0,2);
+
+        // Calculate volume of list
+        int total = 0;
+        for (Shape shape : shapeInterface.getAll()) {
+            total = total + (shape.getValue1());
+            totalField.setText(String.valueOf(total));
+        }
+        VBox items = new VBox();
+        items.getChildren().addAll(text,selectedLabel, selectedItem, valueLabel, value1, totalLabel, totalField);
+
+        BorderPane layout = new BorderPane();
+        layout.setRight(listview);
+        layout.setLeft(items);
+
         return layout;
     }
 }

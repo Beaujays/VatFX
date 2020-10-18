@@ -19,6 +19,8 @@ public class Main extends Application {
     @Override
     public void init() {
         // 1. Create the dictionary that the application uses
+
+        // Default
         this.shapes = new DatabaseShape();
         //this.shapes = new MemoryShape();
     }
@@ -73,6 +75,7 @@ public class Main extends Application {
         mainButton.setStyle("-fx-background-color: DARKGREY;");
         // 3.3. Add the buttons to the menu
         menu.getChildren().addAll(mainButton, menuBar, rightButton);
+        //layout.setBottom(switchMemory);
         layout.setTop(menu);
 
         // 4. Connect the subviews with the buttons. Clicking menu buttons changes the subview.

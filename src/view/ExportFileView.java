@@ -30,16 +30,20 @@ public class ExportFileView {
         Button addButton = new Button("Export file!");
         addButton.setOnAction((event) -> {
             String chooseShapeStr = String.valueOf(chooseShape.getValue());
-            try {
-                shapes.exportFile(chooseShapeStr);
-                message.setText("Export shape '" + chooseShapeStr + "' successfully. \nSaved in map: "
-                        + shapes.getDirectory());
-            } catch (Exception e){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText("Look, an Information Dialog");
-                alert.setContentText("I have a great message for you!");
-                alert.showAndWait();
+            if (chooseShapeStr.equals("")){
+                message.setText("No shape defined.");
+            } else {
+                try {
+                    shapes.exportFile(chooseShapeStr);
+                    message.setText("Export shape '" + chooseShapeStr + "' successfully. \nSaved in map: "
+                            + shapes.getDirectory());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText("Look, an Information Dialog");
+                    alert.setContentText("I have a great message for you!");
+                    alert.showAndWait();
+                }
             }
         });
 
@@ -48,7 +52,7 @@ public class ExportFileView {
         layout.add(nameText, 0, 1);
         layout.add(chooseShape, 1, 1);
         layout.add(addButton, 2, 1);
-        layout.add(message, 0,5,5,5);
+        layout.add(message, 0, 5, 5, 5);
 
         layout.setHgap(10);
         layout.setVgap(10);

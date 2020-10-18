@@ -121,12 +121,13 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
                     int length = Integer.parseInt(parts[2]);
                     int depth = Integer.parseInt(parts[3]);
                     int height = Integer.parseInt(parts[4]);
-                    useStatement("insert into vat.cube (name, length,height, depth, volume) value(?,?,?,?,?,?)", statement -> {
+                    int volume = length * height * depth;
+                    useStatement("insert into vat.cube (name, length, height, depth, volume) value(?,?,?,?,?)", statement -> {
                         statement.setString(1, name);
                         statement.setInt(2, length);
                         statement.setInt(3, height);
                         statement.setInt(4, depth);
-                        statement.setInt(5, (length * height * depth));
+                        statement.setInt(5, volume);
                         return statement.execute();
                     });
                 } else if (parts[1].contains("globe")) {
@@ -135,7 +136,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
                     useStatement("INSERT INTO vat.globe (name, radius, volume) VALUE(?,?,?)", statement -> {
                         statement.setString(1, name);
                         statement.setInt(2, globeRadius);
-                        statement.setDouble(3,(4.0 / 3.0) * Math.PI * Math.pow(globeRadius, 3));
+                        statement.setDouble(3, (4.0 / 3.0) * Math.PI * Math.pow(globeRadius, 3));
                         return statement.execute();
                     });
                 }

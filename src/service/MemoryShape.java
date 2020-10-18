@@ -99,14 +99,13 @@ public class MemoryShape implements ObservableShape {
                     int depth = Integer.parseInt(parts[3]);
                     int height = Integer.parseInt(parts[4]);
                     double calculateCube = length * depth * height;
-
-                    shapeList.add(new Shape(name, shape, length, height, depth, (int) calculateCube));
+                    shapeList.add(new Shape(name, shape,(int) calculateCube, length, height, depth));
                 } else if (parts[1].contains("globe")) {
                     String name = parts[0];
                     String shape = parts[1];
                     int globeRadius = Integer.parseInt(parts[2]);
                     double calculateGlobe = ((4.0 / 3.0) * Math.PI * Math.pow(globeRadius, 3));
-                    shapeList.add(new Shape(name, shape, globeRadius, (int) calculateGlobe));
+                    shapeList.add(new Shape(name, shape,(int) calculateGlobe, globeRadius));
                 }
             }
         } catch (IOException e) {

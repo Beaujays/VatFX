@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -26,7 +27,7 @@ public class MainView {
         Label totalLabel = new Label("Total volume of list in m3");
         TextField totalField = new TextField();
 
-        Label text = new Label("Welcome\n");
+        Label text = new Label("Welcome\n\n");
         text.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
         ListView<Shape> listview = new ListView<>();
         listview.setItems(FXCollections.observableList(shapeInterface.getAll()));
@@ -48,9 +49,9 @@ public class MainView {
         VBox items = new VBox();
         items.getChildren().addAll(text,selectedLabel, selectedItem, valueLabel, value1, totalLabel, totalField);
 
-        GridPane layout = new GridPane();
-        layout.add(listview,1,0);
-        layout.add(items,0,0);
+        BorderPane layout = new BorderPane();
+        layout.setRight(listview);
+        layout.setLeft(items);
 
         return layout;
     }

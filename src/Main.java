@@ -22,7 +22,6 @@ public class Main extends Application {
 
         // Default
         this.shapes = new DatabaseShape();
-        //this.shapes = new MemoryShape();
     }
 
     @Override

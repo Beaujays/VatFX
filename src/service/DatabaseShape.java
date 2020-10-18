@@ -43,6 +43,30 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
             return statement.execute();
         });
     }
+
+    public void saveCilinder(String name, String shape, int value1, int value2) {
+        useStatement("insert into vat.cilinder (name, radius, height, volume) value(?,?,?,?)", statement -> {
+            statement.setString(1, name);
+            statement.setInt(2, value1);
+            statement.setInt(3, value2);
+            statement.setDouble(4, (value1 * value1) * Math.PI * Math.pow(value2, 3));
+
+            return statement.execute();
+        });
+    }
+
+    public void savePiramide(String name, String shape, int value1, int value2, int value3) {
+        useStatement("insert into vat.piramide (name, length, height, depth, volume) value(?,?,?,?,?)", statement -> {
+            statement.setString(1, name);
+            statement.setInt(2, value1);
+            statement.setInt(3, value2);
+            statement.setInt(4, value3);
+            statement.setInt(5, (value1 * value2 * value3 / 2));
+
+            return statement.execute();
+        });
+    }
+
     //endregion
 
     //region Search Shape
@@ -94,7 +118,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
 
     @Override
     public List<Shape> getAll() {
-        return useStatement("SELECT name, volume FROM vat.globe UNION ALL SELECT name, volume FROM vat.cube",
+        return useStatement("SELECT name, volume FROM vat.globe UNION ALL SELECT name, volume FROM vat.cube UNION ALL SELECT name, volume FROM vat.cilinder UNION ALL SELECT name, volume FROM vat.piramide  ",
                 statement -> {
                     ResultSet resultSet = statement.executeQuery();
                     List<Shape> result = new ArrayList<>();

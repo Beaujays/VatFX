@@ -43,6 +43,13 @@ public class Shape {
         this.value4 = value4;
     }
 
+    public Shape(String name, String shape, int calculateCilinder, int value1, int value2) {
+        this.name = name;
+        this.shape = shape;
+        this.value1 = value1;
+        this.value2 = value2;
+    }
+
     // endregion
 
     // region Getters
@@ -85,6 +92,13 @@ public class Shape {
     }
 
     public String toStringCube() {
+        return "Name: " + name + "\nLength: " + value1 + "\nHeight: " + value2 + "\nDepth: " + value3 + "\nVolume: " + value4;
+    }
+    public String toStringCilinder() {
+        return "Name: " + name + "\nRadius: " + value1 +"\nHeight: " + value2+"\nVolume: " + value3;
+    }
+
+    public String toStringPiramide() {
         return "Name: " + name + "\nLength: " + value1 + "\nHeight: " + value2 + "\nDepth: " + value3 + "\nVolume: " + value4;
     }
     //endregion

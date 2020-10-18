@@ -1,10 +1,7 @@
 
 package service;
 
-import domain.Cube;
-import domain.Globe;
 import domain.Shape;
-
 import java.io.File;
 import java.util.List;
 
@@ -12,6 +9,8 @@ public interface ShapeInterface {
     //region Add shape
     void saveGlobe(String name, String shape, int value1);
     void saveCube(String name, String shape, int value1, int value2, int value3);
+    void saveCilinder(String name, String shape, int value1, int value2);
+    void savePiramide(String name, String shape, int value1, int value2, int value3);
     //endregion
 
     //region Search shape

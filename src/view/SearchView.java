@@ -27,6 +27,8 @@ public class SearchView {
         ChoiceBox chooseShape = new ChoiceBox();
         chooseShape.getItems().add("cube");
         chooseShape.getItems().add("globe");
+        chooseShape.getItems().add("cilinder");
+        chooseShape.getItems().add("piramide");
         //endregion
 
         //region Search
@@ -43,8 +45,12 @@ public class SearchView {
                 foundHeader.setText("Found");
                 if (chooseShapeStr.equals("globe")) {
                     found.setText(String.valueOf(shape.toStringGlobe()));
-                } else{
+                } else if (chooseShapeStr.equals("Cube")){
                     found.setText(String.valueOf(shape.toStringCube()));
+                } else if (chooseShapeStr.equals("cilinder")){
+                    found.setText(String.valueOf(shape.toStringCilinder()));
+                } else {
+                    found.setText(String.valueOf(shape.toStringPiramide()));
                 }
 
             } catch (Exception e) {

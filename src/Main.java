@@ -1,14 +1,16 @@
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import service.DatabaseShape;
-import service.MemoryShape;
 import service.ShapeInterface;
 import view.*;
 
@@ -31,6 +33,8 @@ public class Main extends Application {
         MainView mainView = new MainView(shapes);
         InputGlobeView inputGlobeView = new InputGlobeView(shapes);
         InputCubeView inputCubeView = new InputCubeView(shapes);
+        InputPiramideView inputPiramideView = new InputPiramideView(shapes);
+        InputCilinderView inputCilinderView = new InputCilinderView(shapes);
         SearchView searchView = new SearchView(shapes);
         ImportFileView importFile = new ImportFileView(shapes);
         ExportFileView exportFile = new ExportFileView(shapes);
@@ -52,7 +56,9 @@ public class Main extends Application {
         Menu menuAdd = new Menu("Add shape");
         MenuItem addGlobe = new MenuItem("Add globe");
         MenuItem addCube = new MenuItem("Add cube");
-        menuAdd.getItems().addAll(addGlobe, addCube);
+        MenuItem addPiramide = new MenuItem("Add Piramide");
+        MenuItem addCilinder = new MenuItem("Add Cilinder");
+        menuAdd.getItems().addAll(addGlobe, addCube, addPiramide, addCilinder);
 
         // Add menu for import/export files
         Menu menuFiles = new Menu("Files");
@@ -81,6 +87,8 @@ public class Main extends Application {
         mainButton.setOnAction((event)-> layout.setCenter(mainView.getView()));
         addGlobe.setOnAction((event) -> layout.setCenter(inputGlobeView.getView()));
         addCube.setOnAction((event) -> layout.setCenter(inputCubeView.getView()));
+        addPiramide.setOnAction((event) -> layout.setCenter(inputPiramideView.getView()));
+        addCilinder.setOnAction((event) -> layout.setCenter(inputCilinderView.getView()));
         searchButton.setOnAction((event) -> layout.setCenter(searchView.getView()));
         importFiles.setOnAction((event)-> layout.setCenter(importFile.getView()));
         exportFiles.setOnAction((event) -> layout.setCenter(exportFile.getView()));

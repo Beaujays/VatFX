@@ -4,7 +4,6 @@ import database.MySQLJDBCUtil;
 import domain.Shape;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -47,6 +46,30 @@ public class MemoryShape implements ObservableShape {
             System.out.println("\t" + shapes);
         }
     }
+
+    public void saveCilinder(String name, String shape, int value1, int value2) {
+        double calculateCilinder = Math.PI * (value1 * value1) * value2 ;
+        shapeList.add(new Shape(name, shape, (int) calculateCilinder, value1, value2));
+
+        System.out.println("Saved: " + shape);
+        System.out.println("List of shapes:");
+        for (Shape shapes : shapeList) {
+            System.out.println("\t" + shapes);
+        }
+    }
+
+    public void savePiramide(String name, String shape, int value1, int value2, int value3) {
+        double calculatePiramide = value1 * value2 * value3 / 2;
+        shapeList.add(new Shape(name, shape, (int) calculatePiramide, value1, value2, value3));
+
+        System.out.println("Saved: " + shape);
+        System.out.println("List of shapes:");
+        for (Shape shapes : shapeList) {
+            System.out.println("\t" + shapes);
+        }
+    }
+
+
     //endregion
 
     //region Search

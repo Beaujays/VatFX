@@ -58,23 +58,7 @@ public class Shape {
         return value1;
     }
 
-    public int getValue2() {
-        return value2;
-    }
-
-    public int getValue3() {
-        return value3;
-    }
-
-    public int getValue4() {
-        return value4;
-    }
-
     //endregion
-
-    public double calculateGlobe() {
-        return ((4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -90,9 +74,7 @@ public class Shape {
         return Objects.hash(name, shape);
     }
 
-    //@Override
-
-
+    //region To String
     @Override
     public String toString() {
         return "Name: " + name;
@@ -105,4 +87,5 @@ public class Shape {
     public String toStringCube() {
         return "Name: " + name + "\nLength: " + value1 + "\nHeight: " + value2 + "\nDepth: " + value3 + "\nVolume: " + value4;
     }
+    //endregion
 }

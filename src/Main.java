@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import service.DatabaseShape;
+import service.MemoryShape;
 import service.ShapeInterface;
 import view.*;
 
@@ -23,7 +24,8 @@ public class Main extends Application {
         // 1. Create the dictionary that the application uses
 
         // Default
-        this.shapes = new DatabaseShape();
+        //this.shapes = new DatabaseShape();
+        this.shapes = new MemoryShape();
     }
 
     @Override

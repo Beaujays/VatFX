@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import vatfx.service.DatabaseShape;
+import vatfx.service.MemoryShape;
 import vatfx.service.ShapeInterface;
 import vatfx.view.*;
 
@@ -25,7 +26,8 @@ public class Main extends Application {
         // 1. Create the dictionary that the application uses
 
         // Default
-        this.shapes = new DatabaseShape();
+        //this.shapes = new DatabaseShape();
+        this.shapes = new MemoryShape();
     }
 
     @Override

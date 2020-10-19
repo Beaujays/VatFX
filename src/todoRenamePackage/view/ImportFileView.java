@@ -10,11 +10,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import todoRenamePackage.service.ShapeInterface;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
-
-public class ImportFileView extends Component {
+// TODO find JavaFx equivalent to Component
+public class ImportFileView /* extends Component */ {
 
     private final ShapeInterface shapes;
 
@@ -23,6 +20,9 @@ public class ImportFileView extends Component {
     }
 
     public Parent getView() {
+        // TODO use JavaFX instead of Swing or AWT
+        throw new UnsupportedOperationException();
+        /*
         String filename = "";
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
@@ -80,6 +80,7 @@ public class ImportFileView extends Component {
         layout.setPadding(new Insets(10, 10, 10, 10));
 
         return layout;
-    }
+    */
+}
 }
 

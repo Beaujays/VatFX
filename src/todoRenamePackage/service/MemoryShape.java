@@ -4,7 +4,6 @@ import todoRenamePackage.database.MySQLJDBCUtil;
 import todoRenamePackage.domain.Shape;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -194,10 +193,12 @@ public class MemoryShape implements ObservableShape {
 
     @Override
     public File getDirectory() {
-        JFileChooser chooser;
-        chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new java.io.File("."));
-        return chooser.getCurrentDirectory();
+        // TODO use javafx.stage.FileChooser instead
+        throw new UnsupportedOperationException();
+//        JFileChooser chooser;
+//        chooser = new JFileChooser();
+//        chooser.setCurrentDirectory(new java.io.File("."));
+//        return chooser.getCurrentDirectory();
     }
 
     private String getFileName(String baseName) {

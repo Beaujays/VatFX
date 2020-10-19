@@ -1,7 +1,7 @@
-package service;
+package todoRenamePackage.service;
 
-import database.MySQLJDBCUtil;
-import domain.Shape;
+import todoRenamePackage.database.MySQLJDBCUtil;
+import todoRenamePackage.domain.Shape;
 
 import javax.swing.*;
 import java.io.BufferedWriter;

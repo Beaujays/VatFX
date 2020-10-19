@@ -1,4 +1,4 @@
-package domain;
+package todoRenamePackage.domain;
 
 import java.util.Objects;
 

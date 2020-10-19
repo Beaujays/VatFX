@@ -1,4 +1,4 @@
-package view;
+package todoRenamePackage.view;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -8,18 +8,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import service.ShapeInterface;
+import todoRenamePackage.service.ShapeInterface;
 
-public class InputCubeView {
+public class InputPiramideView {
 
-    private final ShapeInterface shapes;
+    private static ShapeInterface shapes;
 
-    public InputCubeView(ShapeInterface shapes) {
-        this.shapes = shapes;
+    public InputPiramideView(ShapeInterface shapes) {
+        InputPiramideView.shapes = shapes;
     }
 
-    public Parent getView() {
-        Label shapeText = new Label("Cube");
+    public static Parent getView() {
+        Label shapeText = new Label("Piramide");
         shapeText.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
         Label nameText = new Label("Name: ");
         TextField nameField = new TextField();
@@ -31,13 +31,13 @@ public class InputCubeView {
         TextField heightField = new TextField();
         Label message = new Label("");
 
-        Button addButton = new Button("Add cube!");
+        Button addButton = new Button("Add Piramide!");
         addButton.setOnAction((event) -> {
             try {
                 int lengthInt = Integer.parseInt(lengthField.getText());
                 int depthInt = Integer.parseInt(depthField.getText());
                 int heightInt = Integer.parseInt(heightField.getText());
-                shapes.saveCube(nameField.getText(), "cube", lengthInt, depthInt, heightInt);
+                shapes.savePiramide(nameField.getText(), "piramide", lengthInt, depthInt, heightInt);
                 message.setText(nameField.getText() + " is added successfully.");
                 nameField.clear();
                 lengthField.clear();
@@ -45,6 +45,7 @@ public class InputCubeView {
                 heightField.clear();
             }catch (Exception e){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                System.out.print(e);
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText("Not all fields are filled in");
                 alert.showAndWait();

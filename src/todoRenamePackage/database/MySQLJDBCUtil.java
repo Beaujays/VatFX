@@ -1,4 +1,4 @@
-package database;
+package todoRenamePackage.database;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -27,7 +27,7 @@ public class MySQLJDBCUtil {
             String user = pros.getProperty("user");
             String password = pros.getProperty("password");
 
-            // create a connection to the database
+            // create a connection to the todoRenamePackage.database
             conn = DriverManager.getConnection(url, user, password);
         } catch (IOException e) {
             System.out.println(e.getMessage());

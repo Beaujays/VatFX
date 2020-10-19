@@ -1,4 +1,4 @@
-package domain;
+package todoRenamePackage.domain;
 
 public class Piramide extends Shape {
 

@@ -1,6 +1,6 @@
-package service;
+package todoRenamePackage.service;
 
-import database.MySQLJDBCUtil;
+import todoRenamePackage.database.MySQLJDBCUtil;
 
 import java.sql.*;
 

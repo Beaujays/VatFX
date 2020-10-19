@@ -1,6 +1,6 @@
-package service;
+package todoRenamePackage.service;
 
-import domain.Shape;
+import todoRenamePackage.domain.Shape;
 import javafx.collections.ObservableList;
 
 public interface ObservableShape extends ShapeInterface {

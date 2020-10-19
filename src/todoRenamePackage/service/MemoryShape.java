@@ -1,7 +1,7 @@
-package service;
+package todoRenamePackage.service;
 
-import database.MySQLJDBCUtil;
-import domain.Shape;
+import todoRenamePackage.database.MySQLJDBCUtil;
+import todoRenamePackage.domain.Shape;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javax.swing.*;

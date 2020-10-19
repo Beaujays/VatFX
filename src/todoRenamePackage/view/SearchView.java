@@ -1,12 +1,12 @@
-package view;
+package todoRenamePackage.view;
 
-import domain.Shape;
+import todoRenamePackage.domain.Shape;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import service.ShapeInterface;
+import todoRenamePackage.service.ShapeInterface;
 
 import java.util.Optional;
 

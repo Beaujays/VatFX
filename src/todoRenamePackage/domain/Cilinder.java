@@ -1,4 +1,4 @@
-package domain;
+package todoRenamePackage.domain;
 
 public class Cilinder extends Shape {
 

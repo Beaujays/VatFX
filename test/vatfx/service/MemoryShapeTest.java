@@ -11,6 +11,7 @@ class MemoryShapeTest {
 
     @BeforeAll
     public static void init() {
+        // Add shape to sut
         sut.saveGlobe("Globe","globe",3);
     }
 
@@ -23,6 +24,7 @@ class MemoryShapeTest {
 
     @Test
     void search() {
+        // Search for a shape expect outcome "Name: Globe"
         assertEquals("Name: Globe", String.valueOf(sut.search("globe", "Globe")));
     }
 
@@ -36,6 +38,7 @@ class MemoryShapeTest {
 
     @Test
     void getAll() {
+        // Check if sut is empty expect outcome false because sut contains 1 shape
         assertFalse(sut.getAll().isEmpty());
     }
 }

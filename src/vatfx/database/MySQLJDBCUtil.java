@@ -12,7 +12,6 @@ public class MySQLJDBCUtil {
      * Get database connection
      *
      * @return a Connection object
-     * @throws SQLException
      */
     public static Connection getConnection() throws SQLException {
         Connection conn = null;

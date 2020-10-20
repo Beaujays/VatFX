@@ -92,7 +92,7 @@ public class Shape {
     }
 
     public String toStringCube() {
-        return "Name: " + name + "\nLength: " + value1 + "\nHeight: " + value2 + "\nDepth: " + value3 + "\nVolume: " + value4;
+        return "Name: " + name + "\nVolume: " + value1 + "\nLength: " + value2 + "\nHeight: " + value3 + "\nDepth: " + value4;
     }
     public String toStringCilinder() {
         return "Name: " + name + "\nRadius: " + value1 +"\nHeight: " + value2+"\nVolume: " + value3;

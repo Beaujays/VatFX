@@ -3,9 +3,9 @@ package vatfx.domain;
 public class Piramide extends Shape {
 
     // region Parameters
-    private int length;
-    private int height;
-    private int depth;
+    private final int length;
+    private final int height;
+    private final int depth;
 
     // endregion
 

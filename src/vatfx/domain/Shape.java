@@ -43,11 +43,12 @@ public class Shape {
         this.value4 = value4;
     }
 
-    public Shape(String name, String shape, int calculateCilinder, int value1, int value2) {
+    public Shape(String name, String shape, int value1, int value2, int value3) {
         this.name = name;
         this.shape = shape;
         this.value1 = value1;
         this.value2 = value2;
+        this.value3 = value3;
     }
 
     // endregion
@@ -84,11 +85,15 @@ public class Shape {
     //region To String
     @Override
     public String toString() {
-        return "Name: " + name;
+        return "Name: " + name + ", Volume: " + value1;
     }
 
     public String toStringGlobe() {
             return "Name: " + name + "\nRadius: " + value1 +"\nVolume: " + value2;
+    }
+
+    public String toStringHemisphere() {
+        return "Name: " + name + "\nRadius: " + value1 +"\nVolume: " + value2;
     }
 
     public String toStringCube() {

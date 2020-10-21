@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MemoryShapeTest {
 
-    public static MemoryShape sut = new MemoryShape();
+    public final static MemoryShape sut = new MemoryShape();
 
     @BeforeAll
     public static void init() {
@@ -32,7 +32,7 @@ class MemoryShapeTest {
     @Test
     void search() {
         // Search for a shape expect outcome "Name: Globe"
-        assertEquals("Name: Globe", String.valueOf(sut.search("globe", "Globe")));
+        assertEquals("Name: Globe, Volume: 113", String.valueOf(sut.search("globe", "Globe")));
     }
 
 

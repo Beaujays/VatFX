@@ -29,4 +29,6 @@ public abstract class AbstractDatabaseShape<E> {
     abstract E recordToEntityGlobe(ResultSet resultSet) throws SQLException;
 
     abstract E recordToEntityCube(ResultSet resultSet) throws SQLException;
+
+    abstract E recordToEntityHemisphere(ResultSet resultSet) throws SQLException;
 }

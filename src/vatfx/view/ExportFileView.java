@@ -27,6 +27,7 @@ public class ExportFileView {
         chooseShape.getItems().add("globe");
         chooseShape.getItems().add("cilinder");
         chooseShape.getItems().add("piramide");
+        chooseShape.getItems().add("hemisphere");
         Label message = new Label();
 
         Button addButton = new Button("Export file!");

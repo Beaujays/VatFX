@@ -1,5 +1,6 @@
 package vatfx.service;
 
+import javafx.stage.FileChooser;
 import vatfx.database.MySQLJDBCUtil;
 import vatfx.domain.Shape;
 
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
-import javafx.stage.FileChooser;
 
 public class DatabaseShape extends AbstractDatabaseShape<Shape> implements ShapeInterface {
 
@@ -27,6 +27,16 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
             statement.setInt(2, value1);
             statement.setDouble(3, (4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
 
+            return statement.execute();
+        });
+    }
+
+    @Override
+    public void saveHemisphere(String name, String shape, int value1) {
+        useStatement("insert into vat.hemisphere (name, radius, volume) value(?,?,?)", statement -> {
+            statement.setString(1, name);
+            statement.setInt(2, value1);
+            statement.setDouble(3, (2.0 / 3.0) * Math.PI * Math.pow(value1, 3));
             return statement.execute();
         });
     }
@@ -79,15 +89,20 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                if (shape.equals("globe")) {
-                    return recordToEntityGlobe(resultSet);
-                } else
-                    return recordToEntityCube(resultSet);
-            } else {
-                return null;
+                switch (shape) {
+                    case "globe":
+                        return recordToEntityGlobe(resultSet);
+                    case "cube":
+                        return recordToEntityCube(resultSet);
+                    case "hemisphere":
+                        return recordToEntityHemisphere(resultSet);
+                    //TODO Jaber implement other shapes
+                }
             }
+            return null;
         });
     }
+
     //endregion
 
     // region Delete data
@@ -103,7 +118,6 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         }
     }
 
-
     @Override
     public void deleteAll(String shape) {
         try (Connection conn = MySQLJDBCUtil.getConnection()) {
@@ -118,21 +132,23 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
 
     @Override
     public List<Shape> getAll() {
-        return useStatement("SELECT name, volume FROM vat.globe UNION ALL SELECT name, volume FROM vat.cube UNION ALL SELECT name, volume FROM vat.cilinder UNION ALL SELECT name, volume FROM vat.piramide  ",
-                statement -> {
-                    ResultSet resultSet = statement.executeQuery();
-                    List<Shape> result = new ArrayList<>();
+        return useStatement("SELECT name, volume FROM vat.globe UNION ALL SELECT name, volume FROM vat.cube " +
+                "UNION ALL SELECT name, volume FROM vat.cilinder UNION ALL SELECT name, volume FROM vat.piramide " +
+                "UNION ALL SELECT name, volume FROM vat.hemisphere", statement -> {
+            ResultSet resultSet = statement.executeQuery();
+            List<Shape> result = new ArrayList<>();
 
-                    while (resultSet.next()) {
-                        Shape shapes = recordToEntity(resultSet);
-                        result.add(shapes);
-                    }
+            while (resultSet.next()) {
+                Shape shapes = recordToEntity(resultSet);
+                result.add(shapes);
+            }
 
-                    return result;
-                });
+            return result;
+        });
     }
 
     // region Import
+    //TODO Jaber add other shapes
     @Override
     public void importFile(String file) {
 
@@ -156,11 +172,20 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
                     });
                 } else if (parts[1].contains("globe")) {
                     String name = parts[0];
-                    int globeRadius = Integer.parseInt(parts[2]);
+                    int radius = Integer.parseInt(parts[2]);
                     useStatement("INSERT INTO vat.globe (name, radius, volume) VALUE(?,?,?)", statement -> {
                         statement.setString(1, name);
-                        statement.setInt(2, globeRadius);
-                        statement.setDouble(3, (4.0 / 3.0) * Math.PI * Math.pow(globeRadius, 3));
+                        statement.setInt(2, radius);
+                        statement.setDouble(3, (4.0 / 3.0) * Math.PI * Math.pow(radius, 3));
+                        return statement.execute();
+                    });
+                } else if (parts[1].contains("hemisphere")) {
+                    String name = parts[0];
+                    int radius = Integer.parseInt(parts[2]);
+                    useStatement("INSERT INTO vat.hemisphere (name, radius, volume) VALUE(?,?,?)", statement -> {
+                        statement.setString(1, name);
+                        statement.setInt(2, radius);
+                        statement.setDouble(3, (2 * 3.14 * 2 * radius * radius));
                         return statement.execute();
                     });
                 }
@@ -259,6 +284,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
     //endregion
 
     //region Record to entity
+    //TODO Jaber add other shapes
     @Override
     Shape recordToEntity(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
@@ -270,6 +296,13 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         String name = resultSet.getString("name");
         int radius = resultSet.getInt("radius");
         double calculate = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
+        return new Shape(name, "globe", radius, (int) calculate);
+    }
+
+    Shape recordToEntityHemisphere(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("name");
+        int radius = resultSet.getInt("radius");
+        double calculate = (2.0 / 3.0) * Math.PI * Math.pow(radius, 3);
         return new Shape(name, "globe", radius, (int) calculate);
     }
 

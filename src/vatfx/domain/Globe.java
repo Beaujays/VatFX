@@ -2,10 +2,12 @@ package vatfx.domain;
 
 public class Globe extends Shape {
     private final int radius;
+    private int volume;
 
-    public Globe(String name, String shape, int radius){
+    public Globe(String name, String shape, int volume, int radius){
         super(name, shape);
         this.radius = radius;
+        this.volume = volume;
     }
 
     public Globe(String name, int radius) {
@@ -35,5 +37,13 @@ public class Globe extends Shape {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
     }
 }

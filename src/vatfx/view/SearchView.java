@@ -10,7 +10,6 @@ import vatfx.service.ShapeInterface;
 
 import java.util.Optional;
 
-@SuppressWarnings("rawtypes")
 public class SearchView {
     private final ShapeInterface shapes;
 
@@ -30,6 +29,7 @@ public class SearchView {
         chooseShape.getItems().add("globe");
         chooseShape.getItems().add("cilinder");
         chooseShape.getItems().add("piramide");
+        chooseShape.getItems().add("hemisphere");
         //endregion
 
         //region Search
@@ -46,8 +46,9 @@ public class SearchView {
                 foundHeader.setText("Found");
                 switch (chooseShapeStr) {
                     case "globe" -> found.setText(String.valueOf(shape.toStringGlobe()));
-                    case "Cube" -> found.setText(String.valueOf(shape.toStringCube()));
+                    case "cube" -> found.setText(String.valueOf(shape.toStringCube()));
                     case "cilinder" -> found.setText(String.valueOf(shape.toStringCilinder()));
+                    case "hemisphere" -> found.setText(String.valueOf(shape.toStringHemisphere()));
                     default -> found.setText(String.valueOf(shape.toStringPiramide()));
                 }
             } catch (Exception e) {

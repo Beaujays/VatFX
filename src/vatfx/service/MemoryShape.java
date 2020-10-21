@@ -23,8 +23,8 @@ public class MemoryShape implements ObservableShape {
     //region Add shape
     @Override
     public void saveGlobe(String name, String shape, int value1) {
-        double calculateGlobe = (1 * (4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
-        shapeList.add(new Shape(name, shape, (int) calculateGlobe, value1));
+        double calculate = (1 * (4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
+        shapeList.add(new Shape(name, shape, (int) calculate, value1));
 
         System.out.println("Saved: " + shape);
         System.out.println("List of shapes:");
@@ -57,7 +57,7 @@ public class MemoryShape implements ObservableShape {
     }
 
     public void savePiramide(String name, String shape, int value1, int value2, int value3) {
-        double calculatePiramide = (value1 * value2 * value3) / 2;
+        double calculatePiramide = (1.0 * (value1 * value2 * value3) / 2);
         shapeList.add(new Shape(name, shape, (int) calculatePiramide, value1, value2, value3));
 
         System.out.println("Saved: " + shape);
@@ -66,6 +66,19 @@ public class MemoryShape implements ObservableShape {
             System.out.println("\t" + shapes);
         }
     }
+
+    @Override
+    public void saveHemisphere(String name, String shape, int value1) {
+        double calculate = (2.0 / 3.0) * Math.PI * Math.pow(value1, 3);
+        shapeList.add(new Shape(name, shape, (int) calculate, value1));
+
+        System.out.println("Saved: " + shape);
+        System.out.println("List of shapes:");
+        for (Shape shapes : shapeList) {
+            System.out.println("\t" + shapes);
+        }
+    }
+
     //endregion
 
     //region Search
@@ -117,14 +130,20 @@ public class MemoryShape implements ObservableShape {
                     int length = Integer.parseInt(parts[2]);
                     int depth = Integer.parseInt(parts[3]);
                     int height = Integer.parseInt(parts[4]);
-                    double calculateCube = length * depth * height;
-                    shapeList.add(new Shape(name, shape, (int) calculateCube, length, height, depth));
+                    double calculate = length * depth * height;
+                    shapeList.add(new Shape(name, shape, (int) calculate, length, height, depth));
                 } else if (parts[1].contains("globe")) {
                     String name = parts[0];
                     String shape = parts[1];
-                    int globeRadius = Integer.parseInt(parts[2]);
-                    double calculateGlobe = ((4.0 / 3.0) * Math.PI * Math.pow(globeRadius, 3));
-                    shapeList.add(new Shape(name, shape, (int) calculateGlobe, globeRadius));
+                    int radius = Integer.parseInt(parts[2]);
+                    double calculate = ((4.0 / 3.0) * Math.PI * Math.pow(radius, 3));
+                    shapeList.add(new Shape(name, shape, (int) calculate, radius));
+                } else if (parts[1].contains("hemisphere")) {
+                    String name = parts[0];
+                    String shape = parts[1];
+                    int radius = Integer.parseInt(parts[2]);
+                    double calculate = (2 * 3.14 * 2 * radius * radius);
+                    shapeList.add(new Shape(name, shape, (int) calculate, radius));
                 }
             }
         } catch (IOException e) {

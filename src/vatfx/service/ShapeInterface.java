@@ -12,6 +12,7 @@ public interface ShapeInterface {
     void saveCube(String name, String shape, int value1, int value2, int value3);
     void saveCilinder(String name, String shape, int value1, int value2);
     void savePiramide(String name, String shape, int value1, int value2, int value3);
+    void saveHemisphere(String name, String shape, int value1);
     //endregion
 
     //region Search shape

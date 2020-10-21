@@ -1,11 +1,9 @@
 package vatfx.view;
 
+import javafx.scene.control.*;
 import vatfx.domain.Shape;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -19,6 +17,7 @@ public class MainView {
     }
 
     public Node getView() {
+
         Label selectedLabel = new Label("Name selected");
         TextField selectedItem = new TextField();
         Label valueLabel = new Label("Volume of selected item");

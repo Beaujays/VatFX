@@ -26,8 +26,8 @@ public class Main extends Application {
         // 1. Create the dictionary that the application uses
 
         // Default
-        this.shapes = new DatabaseShape();
-        //this.shapes = new MemoryShape();
+        //this.shapes = new DatabaseShape();
+        this.shapes = new MemoryShape();
     }
 
     @Override
@@ -39,6 +39,7 @@ public class Main extends Application {
         InputCubeView inputCubeView = new InputCubeView(shapes);
         InputPiramideView inputPiramideView = new InputPiramideView(shapes);
         InputCilinderView inputCilinderView = new InputCilinderView(shapes);
+        InputHemisphereView inputHemisphereView = new InputHemisphereView(shapes);
         SearchView searchView = new SearchView(shapes);
         ImportFileView importFile = new ImportFileView(shapes);
         ExportFileView exportFile = new ExportFileView(shapes);
@@ -55,14 +56,14 @@ public class Main extends Application {
         menu.setStyle("-fx-background-color: DARKGREY;");
         menu.setSpacing(10);
 
-        // Create menu buttons
         // Add menu for adding shapes
         Menu menuAdd = new Menu("Add shape");
         MenuItem addGlobe = new MenuItem("Add globe");
         MenuItem addCube = new MenuItem("Add cube");
-        MenuItem addPiramide = new MenuItem("Add Piramide");
-        MenuItem addCilinder = new MenuItem("Add Cilinder");
-        menuAdd.getItems().addAll(addGlobe, addCube, addPiramide, addCilinder);
+        MenuItem addPiramide = new MenuItem("Add pyramid");
+        MenuItem addCilinder = new MenuItem("Add cylinder");
+        MenuItem addHemisphere = new MenuItem("Add hemisphere");
+        menuAdd.getItems().addAll(addGlobe, addCube, addPiramide, addCilinder, addHemisphere);
 
         // Add menu for import/export files
         Menu menuFiles = new Menu("Files");
@@ -82,9 +83,9 @@ public class Main extends Application {
         Button mainButton = new Button();
         mainButton.setGraphic(new ImageView("file:home.png"));
         mainButton.setStyle("-fx-background-color: DARKGREY;");
-        // 3.3. Add the buttons to the menu
+
+        // Add the buttons to the menu
         menu.getChildren().addAll(mainButton, menuBar, rightButton);
-        //layout.setBottom(switchMemory);
         layout.setTop(menu);
 
         // 4. Connect the subviews with the buttons. Clicking menu buttons changes the subview.
@@ -93,6 +94,7 @@ public class Main extends Application {
         addCube.setOnAction((event) -> layout.setCenter(inputCubeView.getView()));
         addPiramide.setOnAction((event) -> layout.setCenter(inputPiramideView.getView()));
         addCilinder.setOnAction((event) -> layout.setCenter(inputCilinderView.getView()));
+        addHemisphere.setOnAction((event) -> layout.setCenter(inputHemisphereView.getView()));
         searchButton.setOnAction((event) -> layout.setCenter(searchView.getView()));
         importFiles.setOnAction((event)-> layout.setCenter(importFile.getView()));
         exportFiles.setOnAction((event) -> layout.setCenter(exportFile.getView()));

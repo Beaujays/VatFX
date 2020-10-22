@@ -2,49 +2,34 @@ package vatfx.domain;
 
 public class Cilinder extends Shape {
 
-    // region Parameters
-    private final int radius;
-    private final int height;
-
-
     // endregion
 
     // region Constructor
-    public Cilinder(String name, String shape, int radius, int height){
-        super(name, shape);
-        this.radius = radius;
-        this.height = height;
-    }
-
-    public Cilinder(String name, int radius, int height) {
-        super(name);
-        this.radius = radius;
-        this.height = height;
+    public Cilinder(String name, String shape, int volume, int radius, int height) {
+        super(name, shape, volume, radius, height);
 
     }
-
     // endregion
 
     // region Getters
-    public int getRadius() {
-        return radius;
+    @Override
+    public int getValue1() { return super.getValue1(); }
+
+    @Override
+    public int getValue2() {
+        return super.getValue2();
     }
 
-    public int getHeight() {
-        return height;
-    }
+    @Override
+    public int getValue3() { return super.getValue3(); }
 
     //endregion
 
     // region Functions
-    public double calculateCube(){
-        return Math.PI * (radius * radius) * height;
-    }
-
     @Override
     public String toString() {
-        return name + "( length: " + getRadius() + ", height: "
-                + getHeight() + ", volume:" + calculateCube() + "m3";
+        return name + " (radius: " + getValue2() + ", height: "
+                + getValue3() + ", volume:" + getValue1() + "m3";
     }
     // endregion
 }

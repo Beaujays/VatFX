@@ -2,52 +2,38 @@ package vatfx.domain;
 
 public class Piramide extends Shape {
 
-    // region Parameters
-    private final int length;
-    private final int height;
-    private final int depth;
-
-    // endregion
-
     // region Constructor
-    public Piramide(String name, String shape, int length, int height, int depth){
-        super(name, shape);
-        this.length = length;
-        this.height = height;
-        this.depth = depth;
+    public Piramide(String name, String shape,int volume, int length, int height, int depth){
+        super(name, shape, volume, length, height, depth);
     }
-
-    public Piramide(String name, int length, int height, int depth) {
-        super(name);
-        this.length = length;
-        this.height = height;
-        this.depth = depth;
-    }
-
     // endregion
 
     // region Getters
-    public int getLength() {
-        return length;
-    }
-
-    public int getDepth() { return depth; }
-
-    public int getHeight() {
-        return height;
-    }
-
-    //endregion
-
-    // region Functions
-    public int calculateCube(){
-        return length * height * depth / 2;
+    public int getValue1() {
+        return super.getValue1();
     }
 
     @Override
+    public int getValue2() {
+        return super.getValue2();
+    }
+
+    @Override
+    public int getValue3() {
+        return super.getValue3();
+    }
+
+    @Override
+    public int getValue4() {
+        return super.getValue4();
+    }
+    //endregion
+
+    // region Functions
+    @Override
     public String toString() {
-        return name + "( length: " + getLength() + ", depth: " + getDepth() + ", height: "
-                + getHeight() + ", volume:" + calculateCube() + "m3";
+        return name + "( length: " + getValue2() + ", depth: " + getValue3() + ", height: "
+                + getValue4() + ", volume:" + getValue1() + "m3";
     }
     // endregion
 }

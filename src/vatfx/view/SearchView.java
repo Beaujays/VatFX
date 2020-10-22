@@ -44,13 +44,7 @@ public class SearchView {
             try {
                 Shape shape = shapes.search(chooseShapeStr, nameField.getText());
                 foundHeader.setText("Found");
-                switch (chooseShapeStr) {
-                    case "globe" -> found.setText(String.valueOf(shape.toStringGlobe()));
-                    case "cube" -> found.setText(String.valueOf(shape.toStringCube()));
-                    case "cilinder" -> found.setText(String.valueOf(shape.toStringCilinder()));
-                    case "hemisphere" -> found.setText(String.valueOf(shape.toStringHemisphere()));
-                    default -> found.setText(String.valueOf(shape.toStringPiramide()));
-                }
+                found.setText(String.valueOf(shape.toString()));
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Dialog");

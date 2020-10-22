@@ -33,7 +33,7 @@ public class MainView {
         // Select item from listview
         listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Get values from selected item
-            System.out.println("Selected item: " + newValue + " " + newValue.getValue1());
+            System.out.println("Selected item: " + newValue);
             selectedItem.setText(String.valueOf(newValue.getName()));
             value1.setText(String.valueOf(newValue.getValue1()));
         });

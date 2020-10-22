@@ -6,10 +6,10 @@ public class Shape {
     //region Variables
     final String name;
     String shape;
-    int value1;
-    int value2;
-    int value3;
-    int value4;
+    int value1; //volume of a shape
+    int value2; //value 1 of a shape
+    int value3; //value 2 of a shape
+    int value4; //value 3 of a shape
     //endregion
 
     // region Constructors
@@ -66,6 +66,13 @@ public class Shape {
         return value1;
     }
 
+    public int getValue2() { return value2; }
+
+    public int getValue3() { return value3; }
+
+    public int getValue4() { return value4; }
+
+
     //endregion
 
     @Override
@@ -81,30 +88,4 @@ public class Shape {
     public int hashCode() {
         return Objects.hash(name, shape);
     }
-
-    //region To String
-    @Override
-    public String toString() {
-        return "Name: " + name + ", Volume: " + value1;
-    }
-
-    public String toStringGlobe() {
-            return "Name: " + name + "\nRadius: " + value1 +"\nVolume: " + value2;
-    }
-
-    public String toStringHemisphere() {
-        return "Name: " + name + "\nRadius: " + value1 +"\nVolume: " + value2;
-    }
-
-    public String toStringCube() {
-        return "Name: " + name + "\nVolume: " + value1 + "\nLength: " + value2 + "\nHeight: " + value3 + "\nDepth: " + value4;
-    }
-    public String toStringCilinder() {
-        return "Name: " + name + "\nRadius: " + value1 +"\nHeight: " + value2+"\nVolume: " + value3;
-    }
-
-    public String toStringPiramide() {
-        return "Name: " + name + "\nLength: " + value1 + "\nHeight: " + value2 + "\nDepth: " + value3 + "\nVolume: " + value4;
-    }
-    //endregion
 }

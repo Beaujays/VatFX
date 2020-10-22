@@ -3,7 +3,7 @@ package vatfx.service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
-import vatfx.domain.Shape;
+import vatfx.domain.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,19 +24,19 @@ public class MemoryShape implements ObservableShape {
     @Override
     public void saveGlobe(String name, String shape, int value1) {
         double calculate = (1 * (4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
-        shapeList.add(new Shape(name, shape, (int) calculate, value1));
+        shapeList.add(new Globe(name, shape, (int) calculate, value1));
 
         System.out.println("Saved: " + shape);
         System.out.println("List of shapes:");
         for (Shape shapes : shapeList) {
-            System.out.println("\t" + shapes);
+            System.out.println("\t" + shapes + " " + shapes.getValue1());
         }
     }
 
     @Override
     public void saveCube(String name, String shape, int value1, int value2, int value3) {
         double calculateCube = value1 * value2 * value3;
-        shapeList.add(new Shape(name, shape, (int) calculateCube, value1, value2, value3));
+        shapeList.add(new Cube(name, shape, (int) calculateCube, value1, value2, value3));
 
         System.out.println("Saved: " + shape);
         System.out.println("List of shapes:");
@@ -47,7 +47,7 @@ public class MemoryShape implements ObservableShape {
 
     public void saveCilinder(String name, String shape, int value1, int value2) {
         double calculateCilinder = Math.PI * (value1 * value1) * value2;
-        shapeList.add(new Shape(name, shape, (int) calculateCilinder, value1, value2));
+        shapeList.add(new Cilinder(name, shape, (int) calculateCilinder, value1, value2));
 
         System.out.println("Saved: " + shape);
         System.out.println("List of shapes:");
@@ -58,7 +58,7 @@ public class MemoryShape implements ObservableShape {
 
     public void savePiramide(String name, String shape, int value1, int value2, int value3) {
         double calculatePiramide = (1.0 * (value1 * value2 * value3) / 2);
-        shapeList.add(new Shape(name, shape, (int) calculatePiramide, value1, value2, value3));
+        shapeList.add(new Piramide(name, shape, (int) calculatePiramide, value1, value2, value3));
 
         System.out.println("Saved: " + shape);
         System.out.println("List of shapes:");
@@ -70,7 +70,7 @@ public class MemoryShape implements ObservableShape {
     @Override
     public void saveHemisphere(String name, String shape, int value1) {
         double calculate = (2.0 / 3.0) * Math.PI * Math.pow(value1, 3);
-        shapeList.add(new Shape(name, shape, (int) calculate, value1));
+        shapeList.add(new Hemisphere(name, shape, (int) calculate, value1));
 
         System.out.println("Saved: " + shape);
         System.out.println("List of shapes:");
@@ -131,19 +131,19 @@ public class MemoryShape implements ObservableShape {
                     int depth = Integer.parseInt(parts[3]);
                     int height = Integer.parseInt(parts[4]);
                     double calculate = length * depth * height;
-                    shapeList.add(new Shape(name, shape, (int) calculate, length, height, depth));
+                    shapeList.add(new Cube(name, shape, (int) calculate, length, height, depth));
                 } else if (parts[1].contains("globe")) {
                     String name = parts[0];
                     String shape = parts[1];
                     int radius = Integer.parseInt(parts[2]);
                     double calculate = ((4.0 / 3.0) * Math.PI * Math.pow(radius, 3));
-                    shapeList.add(new Shape(name, shape, (int) calculate, radius));
+                    shapeList.add(new Globe(name, shape, (int) calculate, radius));
                 } else if (parts[1].contains("hemisphere")) {
                     String name = parts[0];
                     String shape = parts[1];
                     int radius = Integer.parseInt(parts[2]);
                     double calculate = (2 * 3.14 * 2 * radius * radius);
-                    shapeList.add(new Shape(name, shape, (int) calculate, radius));
+                    shapeList.add(new Hemisphere(name, shape, (int) calculate, radius));
                 }
             }
         } catch (IOException e) {

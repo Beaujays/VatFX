@@ -19,7 +19,15 @@ class MemoryShapeTest {
     void delete() {
         // Delete from ArrayList expect 0 in
         sut.saveGlobe("Globe1","globe",3);
+        sut.saveCube("Cube1","cube",2,2,3);
+        sut.saveCilinder("Cylinder1","cylinder",3,4);
+        sut.saveHemisphere("Hemisphere1","hemisphere",3);
+        sut.savePiramide("Pyramid1","pyramid",3,3,2);
         sut.delete("Globe1", "globe");
+        sut.delete("Cube1", "cube");
+        sut.delete("Cylinder1", "cylinder");
+        sut.delete("Hemisphere1", "hemisphere");
+        sut.delete("Pyramid1", "pyramid");
         assertEquals(1, sut.getAll().size());
     }
 
@@ -34,7 +42,6 @@ class MemoryShapeTest {
         // Search for a shape expect outcome "Name: Globe"
         assertEquals("Name: Globe, Volume: 113", String.valueOf(sut.search("globe", "Globe")));
     }
-
 
     @Test
     void saveGlobe() {

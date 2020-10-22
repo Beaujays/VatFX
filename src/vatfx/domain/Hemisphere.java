@@ -8,7 +8,7 @@ public class Hemisphere extends Shape {
 
     @Override
     public String toString() {
-        return name + "( radius: " + getValue2() + ", volume:" + getValue1() + "m3";
+        return name + " (radius: " + getValue2() + ", volume: " + getValue1() + "m3)";
     }
 
     @Override

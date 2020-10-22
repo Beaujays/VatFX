@@ -28,13 +28,12 @@ public class Cube extends Shape {
     public int getValue4() {
         return super.getValue4();
     }
-
     //endregion
 
     @Override
     public String toString() {
-        return name + "( length: " + getValue2() + ", depth: " + getValue3() + ", height: "
-                + getValue4() + ", volume:" + getValue1() + "m3";
+        return name + " (length: " + getValue2() + ", depth: " + getValue3() + ", height: "
+                + getValue4() + ", volume: " + getValue1() + "m3)";
     }
     // endregion
 }

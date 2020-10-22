@@ -32,8 +32,8 @@ public class Piramide extends Shape {
     // region Functions
     @Override
     public String toString() {
-        return name + "( length: " + getValue2() + ", depth: " + getValue3() + ", height: "
-                + getValue4() + ", volume:" + getValue1() + "m3";
+        return name + " (length: " + getValue2() + ", depth: " + getValue3() + ", height: "
+                + getValue4() + ", volume:" + getValue1() + "m3)";
     }
     // endregion
 }

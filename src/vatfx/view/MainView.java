@@ -30,6 +30,7 @@ public class MainView {
         ListView<Shape> listview = new ListView<>();
         listview.setItems(FXCollections.observableList(shapeInterface.getAll()));
 
+
         // Select item from listview
         listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Get values from selected item

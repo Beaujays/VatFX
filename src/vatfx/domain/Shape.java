@@ -13,6 +13,10 @@ public class Shape {
     //endregion
 
     // region Constructors
+    public Shape(String name) {
+        this.name = name;
+    }
+
     public Shape(String name, String shape) {
         this.name = name;
         this.shape = shape;
@@ -21,10 +25,6 @@ public class Shape {
     public Shape(String name, int value1) {
         this.name = name;
         this.value1 = value1;
-    }
-
-    public Shape(String name) {
-        this.name = name;
     }
 
     public Shape(String name, String shape, int value1, int value2) {
@@ -50,7 +50,6 @@ public class Shape {
         this.value2 = value2;
         this.value3 = value3;
     }
-
     // endregion
 
     // region Getters
@@ -62,17 +61,13 @@ public class Shape {
         return shape;
     }
 
-    public int getValue1() {
-        return value1;
-    }
+    public int getValue1() { return value1; }
 
     public int getValue2() { return value2; }
 
     public int getValue3() { return value3; }
 
     public int getValue4() { return value4; }
-
-
     //endregion
 
     @Override
@@ -88,4 +83,7 @@ public class Shape {
     public int hashCode() {
         return Objects.hash(name, shape);
     }
+
+    @Override
+    public String toString() { return "Name: " + name + ", volume: " + value1; }
 }

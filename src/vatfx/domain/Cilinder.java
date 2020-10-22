@@ -2,8 +2,6 @@ package vatfx.domain;
 
 public class Cilinder extends Shape {
 
-    // endregion
-
     // region Constructor
     public Cilinder(String name, String shape, int volume, int radius, int height) {
         super(name, shape, volume, radius, height);
@@ -29,7 +27,7 @@ public class Cilinder extends Shape {
     @Override
     public String toString() {
         return name + " (radius: " + getValue2() + ", height: "
-                + getValue3() + ", volume:" + getValue1() + "m3";
+                + getValue3() + ", volume: " + getValue1() + "m3)";
     }
     // endregion
 }

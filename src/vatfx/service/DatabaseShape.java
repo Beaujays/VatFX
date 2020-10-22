@@ -1,7 +1,12 @@
 package vatfx.service;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import vatfx.database.MySQLJDBCUtil;
+import vatfx.domain.Cube;
+import vatfx.domain.Globe;
+import vatfx.domain.Hemisphere;
 import vatfx.domain.Shape;
 
 import java.io.BufferedWriter;
@@ -137,12 +142,10 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
                 "UNION ALL SELECT name, volume FROM vat.hemisphere", statement -> {
             ResultSet resultSet = statement.executeQuery();
             List<Shape> result = new ArrayList<>();
-
             while (resultSet.next()) {
                 Shape shapes = recordToEntity(resultSet);
                 result.add(shapes);
             }
-
             return result;
         });
     }
@@ -296,14 +299,14 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         String name = resultSet.getString("name");
         int radius = resultSet.getInt("radius");
         double calculate = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
-        return new Shape(name, "globe", radius, (int) calculate);
+        return new Globe(name, "globe", radius, (int) calculate);
     }
 
     Shape recordToEntityHemisphere(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         int radius = resultSet.getInt("radius");
         double calculate = (2.0 / 3.0) * Math.PI * Math.pow(radius, 3);
-        return new Shape(name, "globe", radius, (int) calculate);
+        return new Hemisphere(name, "globe", radius, (int) calculate);
     }
 
     Shape recordToEntityCube(ResultSet resultSet) throws SQLException {
@@ -312,7 +315,10 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         int height = resultSet.getInt("height");
         int depth = resultSet.getInt("depth");
         int calculate = length * height * depth;
-        return new Shape(name, "cube", length, height, depth, calculate);
+        return new Cube(name, "cube", length, height, depth, calculate);
     }
+
     //endregion
+
+
 }

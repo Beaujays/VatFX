@@ -27,10 +27,11 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
     //region Add shape
     @Override
     public void saveGlobe(String name, String shape, int value1) {
-        useStatement("insert into vat.globe (name, radius, volume) value(?,?,?)", statement -> {
+        useStatement("insert into vat.globe (name, shape, radius, volume) value(?,?,?,?)", statement -> {
             statement.setString(1, name);
-            statement.setInt(2, value1);
-            statement.setDouble(3, (4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
+            statement.setString(2, shape);
+            statement.setInt(3, value1);
+            statement.setDouble(4, (4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
 
             return statement.execute();
         });
@@ -38,45 +39,49 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
 
     @Override
     public void saveHemisphere(String name, String shape, int value1) {
-        useStatement("insert into vat.hemisphere (name, radius, volume) value(?,?,?)", statement -> {
+        useStatement("insert into vat.hemisphere (name, shape, radius, volume) value(?,?,?,?)", statement -> {
             statement.setString(1, name);
-            statement.setInt(2, value1);
-            statement.setDouble(3, (2.0 / 3.0) * Math.PI * Math.pow(value1, 3));
+            statement.setString(2, shape);
+            statement.setInt(3, value1);
+            statement.setDouble(4, (2.0 / 3.0) * Math.PI * Math.pow(value1, 3));
             return statement.execute();
         });
     }
 
     @Override
     public void saveCube(String name, String shape, int value1, int value2, int value3) {
-        useStatement("insert into vat.cube (name, length, height, depth, volume) value(?,?,?,?,?)", statement -> {
+        useStatement("insert into vat.cube (name, shape, length, height, depth, volume) value(?,?,?,?,?,?)", statement -> {
             statement.setString(1, name);
-            statement.setInt(2, value1);
-            statement.setInt(3, value2);
-            statement.setInt(4, value3);
-            statement.setInt(5, (value1 * value2 * value3));
+            statement.setString(2, shape);
+            statement.setInt(3, value1);
+            statement.setInt(4, value2);
+            statement.setInt(5, value3);
+            statement.setInt(6, (value1 * value2 * value3));
 
             return statement.execute();
         });
     }
 
     public void saveCilinder(String name, String shape, int value1, int value2) {
-        useStatement("insert into vat.cilinder (name, radius, height, volume) value(?,?,?,?)", statement -> {
+        useStatement("insert into vat.cilinder (name, shape, radius, height, volume) value(?,?,?,?,?)", statement -> {
             statement.setString(1, name);
-            statement.setInt(2, value1);
-            statement.setInt(3, value2);
-            statement.setDouble(4, (value1 * value1) * Math.PI * Math.pow(value2, 3));
+            statement.setString(2, shape);
+            statement.setInt(3, value1);
+            statement.setInt(4, value2);
+            statement.setDouble(5, (value1 * value1) * Math.PI * Math.pow(value2, 3));
 
             return statement.execute();
         });
     }
 
     public void savePiramide(String name, String shape, int value1, int value2, int value3) {
-        useStatement("insert into vat.piramide (name, length, height, depth, volume) value(?,?,?,?,?)", statement -> {
+        useStatement("insert into vat.piramide (name, shape, length, height, depth, volume) value(?,?,?,?,?,?)", statement -> {
             statement.setString(1, name);
-            statement.setInt(2, value1);
-            statement.setInt(3, value2);
-            statement.setInt(4, value3);
-            statement.setInt(5, (value1 * value2 * value3 / 2));
+            statement.setString(3, shape);
+            statement.setInt(4, value1);
+            statement.setInt(5, value2);
+            statement.setInt(6, value3);
+            statement.setInt(7, (value1 * value2 * value3 / 2));
 
             return statement.execute();
         });
@@ -137,9 +142,9 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
 
     @Override
     public List<Shape> getAll() {
-        return useStatement("SELECT name, volume FROM vat.globe UNION ALL SELECT name, volume FROM vat.cube " +
-                "UNION ALL SELECT name, volume FROM vat.cilinder UNION ALL SELECT name, volume FROM vat.piramide " +
-                "UNION ALL SELECT name, volume FROM vat.hemisphere", statement -> {
+        return useStatement("SELECT name, shape, volume FROM vat.globe UNION ALL SELECT name, shape, volume FROM vat.cube " +
+                "UNION ALL SELECT name, shape, volume FROM vat.cilinder UNION ALL SELECT name, shape, volume FROM vat.piramide " +
+                "UNION ALL SELECT name, shape, volume FROM vat.hemisphere", statement -> {
             ResultSet resultSet = statement.executeQuery();
             List<Shape> result = new ArrayList<>();
             while (resultSet.next()) {
@@ -161,34 +166,40 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
                 String[] parts = line.split(";");
                 if (parts[1].contains("cube")) {
                     String name = parts[0];
+                    String shape = parts[1];
                     int length = Integer.parseInt(parts[2]);
                     int depth = Integer.parseInt(parts[3]);
                     int height = Integer.parseInt(parts[4]);
                     int volume = length * height * depth;
-                    useStatement("insert into vat.cube (name, length, height, depth, volume) value(?,?,?,?,?)", statement -> {
+                    useStatement("insert into vat.cube (name, shape, length, height, depth, volume) value(?,?,?,?,?,?)", statement -> {
                         statement.setString(1, name);
-                        statement.setInt(2, length);
-                        statement.setInt(3, height);
-                        statement.setInt(4, depth);
-                        statement.setInt(5, volume);
+                        statement.setString(2,shape);
+                        statement.setInt(3, length);
+                        statement.setInt(4, height);
+                        statement.setInt(5, depth);
+                        statement.setInt(6, volume);
                         return statement.execute();
                     });
                 } else if (parts[1].contains("globe")) {
                     String name = parts[0];
+                    String shape = parts[1];
                     int radius = Integer.parseInt(parts[2]);
-                    useStatement("INSERT INTO vat.globe (name, radius, volume) VALUE(?,?,?)", statement -> {
+                    useStatement("INSERT INTO vat.globe (name, shape, radius, volume) VALUE(?,?,?,?)", statement -> {
                         statement.setString(1, name);
-                        statement.setInt(2, radius);
-                        statement.setDouble(3, (4.0 / 3.0) * Math.PI * Math.pow(radius, 3));
+                        statement.setString(2,shape);
+                        statement.setInt(3, radius);
+                        statement.setDouble(4, (4.0 / 3.0) * Math.PI * Math.pow(radius, 3));
                         return statement.execute();
                     });
                 } else if (parts[1].contains("hemisphere")) {
                     String name = parts[0];
+                    String shape = parts[1];
                     int radius = Integer.parseInt(parts[2]);
-                    useStatement("INSERT INTO vat.hemisphere (name, radius, volume) VALUE(?,?,?)", statement -> {
+                    useStatement("INSERT INTO vat.hemisphere (name, shape, radius, volume) VALUE(?,?,?,?)", statement -> {
                         statement.setString(1, name);
-                        statement.setInt(2, radius);
-                        statement.setDouble(3, (2 * 3.14 * 2 * radius * radius));
+                        statement.setString(2,shape);
+                        statement.setInt(3, radius);
+                        statement.setDouble(4, (2 * 3.14 * 2 * radius * radius));
                         return statement.execute();
                     });
                 }
@@ -291,8 +302,9 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
     @Override
     Shape recordToEntity(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
+        String shape = resultSet.getString("shape");
         int volume = resultSet.getInt("volume");
-        return new Shape(name, volume);
+        return new Shape(name, shape, volume);
     }
 
     Shape recordToEntityGlobe(ResultSet resultSet) throws SQLException {

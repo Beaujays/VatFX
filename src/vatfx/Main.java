@@ -26,8 +26,8 @@ public class Main extends Application {
         // 1. Create the dictionary that the application uses
 
         // Default
-        this.shapes = new DatabaseShape();
-        //this.shapes = new MemoryShape();
+        //this.shapes = new DatabaseShape();
+        this.shapes = new MemoryShape();
     }
 
     @Override

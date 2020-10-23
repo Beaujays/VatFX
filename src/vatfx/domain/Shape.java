@@ -21,6 +21,11 @@ public class Shape {
         this.name = name;
         this.shape = shape;
     }
+    public Shape(String name, String shape, int value1) {
+        this.name = name;
+        this.shape = shape;
+        this.value1 = value1;
+    }
 
     public Shape(String name, int value1) {
         this.name = name;

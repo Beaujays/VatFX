@@ -1,13 +1,15 @@
 package vatfx.view;
 
-import javafx.scene.control.*;
-import vatfx.domain.Shape;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import vatfx.domain.Shape;
 import vatfx.service.ShapeInterface;
+
+import java.util.Optional;
 
 public class MainView {
     private final ShapeInterface shapeInterface;
@@ -24,12 +26,13 @@ public class MainView {
         TextField value1 = new TextField();
         Label totalLabel = new Label("Total volume of list in m3");
         TextField totalField = new TextField();
-
+        TextField shapeSelected = new TextField();
+        Button deleteShape = new Button("Delete selected shape");
+        Button refreshButton = new Button("Refresh list");
         Label text = new Label("Welcome\n\n");
         text.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
         ListView<Shape> listview = new ListView<>();
         listview.setItems(FXCollections.observableList(shapeInterface.getAll()));
-
 
         // Select item from listview
         listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -37,7 +40,26 @@ public class MainView {
             System.out.println("Selected item: " + newValue);
             selectedItem.setText(String.valueOf(newValue.getName()));
             value1.setText(String.valueOf(newValue.getValue1()));
+            shapeSelected.setText(newValue.getShape());
         });
+
+        // Delete selected item from list
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Delete a record");
+        alert.setContentText("Are you sure you want to delete it?");
+        deleteShape.setOnAction((event) -> {
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                shapeInterface.delete(selectedItem.getText(), shapeSelected.getText());
+                shapeSelected.clear();
+                value1.clear();
+                selectedItem.clear();
+            }
+        });
+
+        // Refresh button for refreshing the list
+        refreshButton.setOnAction(e -> listview.setItems(FXCollections.observableArrayList(shapeInterface.getAll())));
 
         // Calculate volume of list
         int total = 0;
@@ -46,7 +68,8 @@ public class MainView {
             totalField.setText(String.valueOf(total));
         }
         VBox items = new VBox();
-        items.getChildren().addAll(text,selectedLabel, selectedItem, valueLabel, value1, totalLabel, totalField);
+        items.getChildren().addAll(text, selectedLabel, selectedItem, shapeSelected, valueLabel, value1, totalLabel, totalField,
+                deleteShape, refreshButton);
 
         BorderPane layout = new BorderPane();
         layout.setRight(listview);

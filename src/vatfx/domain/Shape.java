@@ -13,22 +13,9 @@ public class Shape {
     //endregion
 
     // region Constructors
-    public Shape(String name) {
-        this.name = name;
-    }
-
-    public Shape(String name, String shape) {
-        this.name = name;
-        this.shape = shape;
-    }
     public Shape(String name, String shape, int value1) {
         this.name = name;
         this.shape = shape;
-        this.value1 = value1;
-    }
-
-    public Shape(String name, int value1) {
-        this.name = name;
         this.value1 = value1;
     }
 
@@ -38,6 +25,13 @@ public class Shape {
         this.value1 = value1;
         this.value2 = value2;
     }
+    public Shape(String name, String shape, int value1, int value2, int value3) {
+        this.name = name;
+        this.shape = shape;
+        this.value1 = value1;
+        this.value2 = value2;
+        this.value3 = value3;
+    }
 
     public Shape(String name, String shape, int value1, int value2, int value3, int value4) {
         this.name = name;
@@ -46,14 +40,6 @@ public class Shape {
         this.value2 = value2;
         this.value3 = value3;
         this.value4 = value4;
-    }
-
-    public Shape(String name, String shape, int value1, int value2, int value3) {
-        this.name = name;
-        this.shape = shape;
-        this.value1 = value1;
-        this.value2 = value2;
-        this.value3 = value3;
     }
     // endregion
 

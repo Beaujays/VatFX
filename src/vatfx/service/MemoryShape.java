@@ -45,6 +45,7 @@ public class MemoryShape implements ObservableShape {
         }
     }
 
+    @Override
     public void saveCilinder(String name, String shape, int value1, int value2) {
         double calculateCilinder = Math.PI * (value1 * value1) * value2;
         shapeList.add(new Cilinder(name, shape, (int) calculateCilinder, value1, value2));
@@ -56,6 +57,7 @@ public class MemoryShape implements ObservableShape {
         }
     }
 
+    @Override
     public void savePiramide(String name, String shape, int value1, int value2, int value3) {
         double calculatePiramide = (1.0 * (value1 * value2 * value3) / 2);
         shapeList.add(new Piramide(name, shape, (int) calculatePiramide, value1, value2, value3));
@@ -185,6 +187,12 @@ public class MemoryShape implements ObservableShape {
         }
     }
 
+    private String getFileName(String baseName) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateTimeInfo = dateFormat.format(new Date());
+        return baseName.concat(String.format("_%s.csv", dateTimeInfo));
+    }
+
     @Override
     public File getDirectory() {
         FileChooser chooser = new FileChooser();
@@ -192,12 +200,6 @@ public class MemoryShape implements ObservableShape {
         File file = new File(currentDir);
         chooser.setInitialDirectory(file);
         return chooser.getInitialDirectory();
-    }
-
-    private String getFileName(String baseName) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateTimeInfo = dateFormat.format(new Date());
-        return baseName.concat(String.format("_%s.csv", dateTimeInfo));
     }
 
     @Override

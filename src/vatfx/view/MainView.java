@@ -26,6 +26,7 @@ public class MainView {
         TextField value1 = new TextField();
         Label totalLabel = new Label("Total volume of list in m3");
         TextField totalField = new TextField();
+        Label shapeLabel = new Label("Name selected shape");
         TextField shapeSelected = new TextField();
         Button deleteShape = new Button("Delete selected shape");
         Button refreshButton = new Button("Refresh list");
@@ -37,10 +38,12 @@ public class MainView {
         // Select item from listview
         listview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Get values from selected item
-            System.out.println("Selected item: " + newValue);
-            selectedItem.setText(String.valueOf(newValue.getName()));
-            value1.setText(String.valueOf(newValue.getValue1()));
-            shapeSelected.setText(newValue.getShape());
+            if (newValue != null) {
+                System.out.println("Selected item: " + newValue);
+                selectedItem.setText(String.valueOf(newValue.getName()));
+                value1.setText(String.valueOf(newValue.getValue1()));
+                shapeSelected.setText(newValue.getShape());
+            }
         });
 
         // Delete selected item from list
@@ -59,7 +62,7 @@ public class MainView {
         });
 
         // Refresh button for refreshing the list
-        refreshButton.setOnAction(e -> listview.setItems(FXCollections.observableArrayList(shapeInterface.getAll())));
+        refreshButton.setOnAction((event) -> listview.setItems(FXCollections.observableList(shapeInterface.getAll())));
 
         // Calculate volume of list
         int total = 0;
@@ -68,8 +71,8 @@ public class MainView {
             totalField.setText(String.valueOf(total));
         }
         VBox items = new VBox();
-        items.getChildren().addAll(text, selectedLabel, selectedItem, shapeSelected, valueLabel, value1, totalLabel, totalField,
-                deleteShape, refreshButton);
+        items.getChildren().addAll(text, selectedLabel, selectedItem, shapeLabel, shapeSelected, valueLabel, value1,
+                totalLabel, totalField, deleteShape, refreshButton);
 
         BorderPane layout = new BorderPane();
         layout.setRight(listview);

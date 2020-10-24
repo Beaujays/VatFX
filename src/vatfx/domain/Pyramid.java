@@ -8,32 +8,11 @@ public class Pyramid extends Shape {
     }
     // endregion
 
-    // region Getters
-    public int getValue1() {
-        return super.getValue1();
-    }
-
-    @Override
-    public int getValue2() {
-        return super.getValue2();
-    }
-
-    @Override
-    public int getValue3() {
-        return super.getValue3();
-    }
-
-    @Override
-    public int getValue4() {
-        return super.getValue4();
-    }
-    //endregion
-
     // region Functions
     @Override
     public String toString() {
-        return name + " (length: " + getValue2() + ", depth: " + getValue3() + ", height: "
-                + getValue4() + ", volume:" + getValue1() + "m3)";
+        return name + " (length: " + value1 + ", depth: " + value2 + ", height: "
+                + value3 + ", volume:" + volume + "m3)";
     }
     // endregion
 }

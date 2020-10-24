@@ -5,41 +5,41 @@ import java.util.Objects;
 public class Shape {
     //region Variables
     final String name;
-    String shape;
-    int value1; //volume of a shape
-    int value2; //value 1 of a shape
-    int value3; //value 2 of a shape
-    int value4; //value 3 of a shape
+    final String shape;
+    final int volume; //volume of a shape
+    int value1; //value 1 of a shape
+    int value2; //value 2 of a shape
+    int value3; //value 3 of a shape
     //endregion
 
     // region Constructors
-    public Shape(String name, String shape, int value1) {
+    public Shape(String name, String shape, int volume) {
         this.name = name;
         this.shape = shape;
-        this.value1 = value1;
+        this.volume = volume;
     }
 
-    public Shape(String name, String shape, int value1, int value2) {
+    public Shape(String name, String shape, int volume, int value1) {
         this.name = name;
         this.shape = shape;
+        this.volume = volume;
+        this.value1 = value1;
+    }
+    public Shape(String name, String shape, int volume, int value1, int value2) {
+        this.name = name;
+        this.shape = shape;
+        this.volume = volume;
         this.value1 = value1;
         this.value2 = value2;
     }
-    public Shape(String name, String shape, int value1, int value2, int value3) {
+
+    public Shape(String name, String shape, int volume, int value1, int value2, int value3) {
         this.name = name;
         this.shape = shape;
+        this.volume = volume;
         this.value1 = value1;
         this.value2 = value2;
         this.value3 = value3;
-    }
-
-    public Shape(String name, String shape, int value1, int value2, int value3, int value4) {
-        this.name = name;
-        this.shape = shape;
-        this.value1 = value1;
-        this.value2 = value2;
-        this.value3 = value3;
-        this.value4 = value4;
     }
     // endregion
 
@@ -52,13 +52,13 @@ public class Shape {
         return shape;
     }
 
+    public int getVolume() { return volume; }
+
     public int getValue1() { return value1; }
 
     public int getValue2() { return value2; }
 
     public int getValue3() { return value3; }
-
-    public int getValue4() { return value4; }
     //endregion
 
     @Override
@@ -76,5 +76,5 @@ public class Shape {
     }
 
     @Override
-    public String toString() { return "Name: " + name + ", volume: " + value1; }
+    public String toString() { return "Name: " + name + ", volume: " + volume; }
 }

@@ -48,7 +48,6 @@ class MemoryShapeTest {
         assertEquals(3, sut.getAll().size());
     }
 
-
     @Test
     void deleteAll() {
         sut.deleteAll("cube");

@@ -9,25 +9,9 @@ public class Cylinder extends Shape {
     }
     // endregion
 
-    // region Getters
-    @Override
-    public int getValue1() { return super.getValue1(); }
-
-    @Override
-    public int getValue2() {
-        return super.getValue2();
-    }
-
-    @Override
-    public int getValue3() { return super.getValue3(); }
-
-    //endregion
-
     // region Functions
     @Override
     public String toString() {
-        return name + " (radius: " + getValue2() + ", height: "
-                + getValue3() + ", volume: " + getValue1() + "m3)";
-    }
+        return name + " (radius: " + value1+ ", height: " + value2 + ", volume: " + volume + "m3)"; }
     // endregion
 }

@@ -1,6 +1,7 @@
 package vatfx;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,8 +26,8 @@ public class Main extends Application {
         // 1. Create the dictionary that the application uses
 
         // Default
-        this.shapes = new DatabaseShape();
-        //this.shapes = new MemoryShape();
+        //this.shapes = new DatabaseShape();
+        this.shapes = new MemoryShape();
     }
 
     @Override
@@ -54,6 +55,7 @@ public class Main extends Application {
         menuBar.setStyle("-fx-background-color: DARKGREY;");
         menu.setStyle("-fx-background-color: DARKGREY;");
         menu.setSpacing(10);
+        menu.setPadding(new Insets(1,1,1,1));
 
         // Add menu for adding shapes
         Menu menuAdd = new Menu("Add shape");

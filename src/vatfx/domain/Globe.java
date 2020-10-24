@@ -2,6 +2,7 @@ package vatfx.domain;
 
 public class Globe extends Shape {
 
+    //region Constructor
     public Globe(String name, String shape, int volume, int radius) {
         super(name, shape, volume, radius);
     }

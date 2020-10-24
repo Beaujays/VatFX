@@ -81,7 +81,6 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
             return statement.execute();
         });
     }
-
     //endregion
 
     //region Search Shape

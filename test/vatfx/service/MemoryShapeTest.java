@@ -44,7 +44,7 @@ class MemoryShapeTest {
 
     @Test
     void saveCylinder() {
-        sut.saveCilinder("Cylinder", "cilinder", 3, 3);
+        sut.saveCylinder("Cylinder", "cylinder", 3, 3);
         assertEquals(3, sut.getAll().size());
     }
 
@@ -69,7 +69,7 @@ class MemoryShapeTest {
 
     @Test
     void savePyramid() {
-        sut.savePiramide("Pyramid1", "piramide", 3, 4, 5);
+        sut.savePyramid("Pyramid1", "pyramid", 3, 4, 5);
         assertEquals(5, sut.getAll().size());
     }
 

@@ -7,11 +7,8 @@ public class Cylinder extends Shape {
         super(name, shape, volume, radius, height);
 
     }
-    // endregion
 
-    // region Functions
     @Override
     public String toString() {
         return name + " (radius: " + value1+ ", height: " + value2 + ", volume: " + volume + "m3)"; }
-    // endregion
 }

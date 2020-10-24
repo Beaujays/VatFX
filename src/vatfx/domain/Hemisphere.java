@@ -2,6 +2,7 @@ package vatfx.domain;
 
 public class Hemisphere extends Shape {
 
+    //region Constructor
     public Hemisphere(String name, String shape, int volume, int radius) {
         super(name, shape, volume, radius);
     }

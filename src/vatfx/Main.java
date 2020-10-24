@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import vatfx.service.DatabaseShape;
+import vatfx.service.MemoryShape;
 import vatfx.service.ShapeInterface;
 import vatfx.view.*;
 
@@ -23,17 +24,16 @@ public class Main extends Application {
 
     @Override
     public void init() {
-        // 1. Create the dictionary that the application uses
+        // Select the dictionary that the application uses
 
-        // Default
-        //this.shapes = new DatabaseShape();
-        this.shapes = new MemoryShape();
+        this.shapes = new DatabaseShape();
+        //this.shapes = new MemoryShape();
     }
 
     @Override
     public void start(Stage window) {
 
-        // 2. Create the views ("subviews")
+        // Create the views ("subviews")
         MainView mainView = new MainView(shapes);
         InputGlobeView inputGlobeView = new InputGlobeView(shapes);
         InputCubeView inputCubeView = new InputCubeView(shapes);
@@ -45,11 +45,11 @@ public class Main extends Application {
         ExportFileView exportFile = new ExportFileView(shapes);
         window.setTitle("Shape analyse tool");
 
-        // 3. Create the higher level layout
+        // Create the higher level layout
         BorderPane layout = new BorderPane();
         layout.setStyle("-fx-background-color: LIGHTGRAY;");
 
-        // 3.1. Create the menu for the general layout
+        // Create the menu for the general layout
         HBox menu = new HBox();
         MenuBar menuBar = new MenuBar();
         menuBar.setStyle("-fx-background-color: DARKGREY;");
@@ -61,10 +61,10 @@ public class Main extends Application {
         Menu menuAdd = new Menu("Add shape");
         MenuItem addGlobe = new MenuItem("Add globe");
         MenuItem addCube = new MenuItem("Add cube");
-        MenuItem addPiramide = new MenuItem("Add pyramid");
-        MenuItem addCilinder = new MenuItem("Add cylinder");
+        MenuItem addPyramid = new MenuItem("Add pyramid");
+        MenuItem addCylinder = new MenuItem("Add cylinder");
         MenuItem addHemisphere = new MenuItem("Add hemisphere");
-        menuAdd.getItems().addAll(addGlobe, addCube, addPiramide, addCilinder, addHemisphere);
+        menuAdd.getItems().addAll(addGlobe, addCube, addPyramid, addCylinder, addHemisphere);
 
         // Add menu for import/export files
         Menu menuFiles = new Menu("Files");
@@ -89,24 +89,24 @@ public class Main extends Application {
         menu.getChildren().addAll(mainButton, menuBar, rightButton);
         layout.setTop(menu);
 
-        // 4. Connect the subviews with the buttons. Clicking menu buttons changes the subview.
+        // Connect the subviews with the buttons. Clicking menu buttons changes the subview.
         mainButton.setOnAction((event)-> layout.setCenter(mainView.getView()));
         addGlobe.setOnAction((event) -> layout.setCenter(inputGlobeView.getView()));
         addCube.setOnAction((event) -> layout.setCenter(inputCubeView.getView()));
-        addPiramide.setOnAction((event) -> layout.setCenter(inputPyramidView.getView()));
-        addCilinder.setOnAction((event) -> layout.setCenter(inputCylinderView.getView()));
+        addPyramid.setOnAction((event) -> layout.setCenter(inputPyramidView.getView()));
+        addCylinder.setOnAction((event) -> layout.setCenter(inputCylinderView.getView()));
         addHemisphere.setOnAction((event) -> layout.setCenter(inputHemisphereView.getView()));
         searchButton.setOnAction((event) -> layout.setCenter(searchView.getView()));
         importFiles.setOnAction((event)-> layout.setCenter(importFile.getView()));
         exportFiles.setOnAction((event) -> layout.setCenter(exportFile.getView()));
 
-        // 5. First show the input view
+        // First show the input view
         layout.setCenter(mainView.getView());
 
-        // 6. Create the main view and add the high level layout
+        // Create the main view and add the high level layout
         Scene view = new Scene(layout, 500, 400);
 
-        // 7. Show the application
+        // Show the application
         window.setScene(view);
         window.show();
     }

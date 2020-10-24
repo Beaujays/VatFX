@@ -64,7 +64,15 @@ public class MainView {
         });
 
         // Refresh button for refreshing the list
-        refreshButton.setOnAction((event) -> listview.setItems(FXCollections.observableList(shapes.getAll())));
+        refreshButton.setOnAction((event) -> {
+
+            listview.setItems(FXCollections.observableList(shapes.getAll()));
+            int total = 0;
+            for (Shape shape : shapes.getAll()){
+                total = total + (shape.getVolume());
+                totalField.setText(String.valueOf(total));
+            }
+        });
 
         // Calculate volume of list
         int total = 0;

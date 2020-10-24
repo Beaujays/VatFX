@@ -63,8 +63,8 @@ public class ImportFileView extends Window {
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Dialog");
-                alert.setHeaderText("Look, an Information Dialog");
-                alert.setContentText("I have a great message for you!");
+                alert.setHeaderText("No file selected");
+                alert.setContentText("Please select or fill in filename");
 
                 alert.showAndWait();
             }

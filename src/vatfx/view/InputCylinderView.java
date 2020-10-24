@@ -29,7 +29,7 @@ public class InputCylinderView {
         TextField heightField = new TextField();
         Label message = new Label("");
 
-        Button addButton = new Button("Add cube!");
+        Button addButton = new Button("Add cylinder!");
         addButton.setOnAction((event) -> {
             try {
                 int radiusInt = Integer.parseInt(radiusField.getText());

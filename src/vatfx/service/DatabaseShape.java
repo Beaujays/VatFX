@@ -1,13 +1,8 @@
 package vatfx.service;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import vatfx.database.MySQLJDBCUtil;
-import vatfx.domain.Cube;
-import vatfx.domain.Globe;
-import vatfx.domain.Hemisphere;
-import vatfx.domain.Shape;
+import vatfx.domain.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -62,8 +57,8 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         });
     }
 
-    public void saveCilinder(String name, String shape, int value1, int value2) {
-        useStatement("insert into vat.cilinder (name, shape, radius, height, volume) value(?,?,?,?,?)", statement -> {
+    public void saveCylinder(String name, String shape, int value1, int value2) {
+        useStatement("insert into vat.Cylinder (name, shape, radius, height, volume) value(?,?,?,?,?)", statement -> {
             statement.setString(1, name);
             statement.setString(2, shape);
             statement.setInt(3, value1);
@@ -74,8 +69,8 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         });
     }
 
-    public void savePiramide(String name, String shape, int value1, int value2, int value3) {
-        useStatement("insert into vat.piramide (name, shape, length, height, depth, volume) value(?,?,?,?,?,?)", statement -> {
+    public void savePyramid(String name, String shape, int value1, int value2, int value3) {
+        useStatement("insert into vat.pyramid (name, shape, length, height, depth, volume) value(?,?,?,?,?,?)", statement -> {
             statement.setString(1, name);
             statement.setString(3, shape);
             statement.setInt(4, value1);
@@ -106,7 +101,10 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
                         return recordToEntityCube(resultSet);
                     case "hemisphere":
                         return recordToEntityHemisphere(resultSet);
-                    //TODO Jaber implement other shapes
+                    case "cylinder":
+                        return recordToEntityCylinder(resultSet);
+                    case "pyramid":
+                        return recordToEntityPyramid(resultSet);
                 }
             }
             return null;
@@ -143,7 +141,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
     @Override
     public List<Shape> getAll() {
         return useStatement("SELECT name, shape, volume FROM vat.globe UNION ALL SELECT name, shape, volume FROM vat.cube " +
-                "UNION ALL SELECT name, shape, volume FROM vat.cilinder UNION ALL SELECT name, shape, volume FROM vat.piramide " +
+                "UNION ALL SELECT name, shape, volume FROM vat.cylinder UNION ALL SELECT name, shape, volume FROM vat.pyramid " +
                 "UNION ALL SELECT name, shape, volume FROM vat.hemisphere", statement -> {
             ResultSet resultSet = statement.executeQuery();
             List<Shape> result = new ArrayList<>();
@@ -156,7 +154,6 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
     }
 
     // region Import
-    //TODO Jaber add other shapes
     @Override
     public void importFile(String file) {
 
@@ -197,11 +194,40 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
                     int radius = Integer.parseInt(parts[2]);
                     useStatement("INSERT INTO vat.hemisphere (name, shape, radius, volume) VALUE(?,?,?,?)", statement -> {
                         statement.setString(1, name);
-                        statement.setString(2,shape);
+                        statement.setString(2, shape);
                         statement.setInt(3, radius);
                         statement.setDouble(4, (2 * 3.14 * 2 * radius * radius));
                         return statement.execute();
                     });
+                } else if (parts[1].contains("Cylinder")) {
+                    String name = parts[0];
+                    String shape = parts[1];
+                    int radius = Integer.parseInt(parts[2]);
+                    int height = Integer.parseInt(parts[3]);
+                    useStatement("INSERT INTO vat.cylinder (name, shape, length, depth, height, volume) VALUE(?,?,?,?,?,?)", statement -> {
+                        statement.setString(1, name);
+                        statement.setString(2, shape);
+                        statement.setInt(3, radius);
+                        statement.setInt(4, height);
+                        statement.setDouble(4, (Math.PI * (radius * radius) * height));
+                        return statement.execute();
+                    });
+                } else if (parts[1].contains("Pyramid")) {
+                            String name = parts[0];
+                            String shape = parts[1];
+                            int length = Integer.parseInt(parts[2]);
+                            int depth = Integer.parseInt(parts[3]);
+                            int height = Integer.parseInt(parts[4]);
+                            int volume = length * height * depth / 2;
+                            useStatement("INSERT INTO vat.pyramid (name, shape, length, depth, height, volume) VALUE(?,?,?,?,?,?)", statement -> {
+                                statement.setString(1, name);
+                                statement.setString(2,shape);
+                                statement.setInt(3, length);
+                                statement.setInt(4, height);
+                                statement.setInt(5, depth);
+                                statement.setInt(6, volume);
+                                return statement.execute();
+                            });
                 }
             }
         } catch (IOException e) {
@@ -298,7 +324,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
     //endregion
 
     //region Record to entity
-    //TODO Jaber add other shapes
+
     @Override
     Shape recordToEntity(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
@@ -319,6 +345,23 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         int radius = resultSet.getInt("radius");
         double calculate = (2.0 / 3.0) * Math.PI * Math.pow(radius, 3);
         return new Hemisphere(name, "globe", radius, (int) calculate);
+    }
+
+    Shape recordToEntityCylinder(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("name");
+        int radius = resultSet.getInt("radius");
+        int height = resultSet.getInt("height");
+        double calculate = (radius * radius) * Math.PI * Math.pow(height, 3);
+        return new Cylinder(name, "Cylinder", radius, height, (int) calculate);
+    }
+
+    Shape recordToEntityPyramid(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("name");
+        int length = resultSet.getInt("length");
+        int height = resultSet.getInt("height");
+        int depth = resultSet.getInt("depth");
+        int calculate = length * height * depth / 2;
+        return new Pyramid(name, "Pyramid", length, height, depth, calculate);
     }
 
     Shape recordToEntityCube(ResultSet resultSet) throws SQLException {

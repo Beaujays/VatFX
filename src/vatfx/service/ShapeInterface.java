@@ -10,8 +10,8 @@ public interface ShapeInterface {
     //region Add shape
     void saveGlobe(String name, String shape, int value1);
     void saveCube(String name, String shape, int value1, int value2, int value3);
-    void saveCilinder(String name, String shape, int value1, int value2);
-    void savePiramide(String name, String shape, int value1, int value2, int value3);
+    void saveCylinder(String name, String shape, int value1, int value2);
+    void savePyramid(String name, String shape, int value1, int value2, int value3);
     void saveHemisphere(String name, String shape, int value1);
     //endregion
 

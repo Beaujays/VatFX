@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import vatfx.service.DatabaseShape;
-import vatfx.service.MemoryShape;
 import vatfx.service.ShapeInterface;
 import vatfx.view.*;
 
@@ -37,8 +36,8 @@ public class Main extends Application {
         MainView mainView = new MainView(shapes);
         InputGlobeView inputGlobeView = new InputGlobeView(shapes);
         InputCubeView inputCubeView = new InputCubeView(shapes);
-        InputPiramideView inputPiramideView = new InputPiramideView(shapes);
-        InputCilinderView inputCilinderView = new InputCilinderView(shapes);
+        InputPyramidView inputPyramidView = new InputPyramidView(shapes);
+        InputCylinderView inputCylinderView = new InputCylinderView(shapes);
         InputHemisphereView inputHemisphereView = new InputHemisphereView(shapes);
         SearchView searchView = new SearchView(shapes);
         ImportFileView importFile = new ImportFileView(shapes);
@@ -92,8 +91,8 @@ public class Main extends Application {
         mainButton.setOnAction((event)-> layout.setCenter(mainView.getView()));
         addGlobe.setOnAction((event) -> layout.setCenter(inputGlobeView.getView()));
         addCube.setOnAction((event) -> layout.setCenter(inputCubeView.getView()));
-        addPiramide.setOnAction((event) -> layout.setCenter(inputPiramideView.getView()));
-        addCilinder.setOnAction((event) -> layout.setCenter(inputCilinderView.getView()));
+        addPiramide.setOnAction((event) -> layout.setCenter(inputPyramidView.getView()));
+        addCilinder.setOnAction((event) -> layout.setCenter(inputCylinderView.getView()));
         addHemisphere.setOnAction((event) -> layout.setCenter(inputHemisphereView.getView()));
         searchButton.setOnAction((event) -> layout.setCenter(searchView.getView()));
         importFiles.setOnAction((event)-> layout.setCenter(importFile.getView()));

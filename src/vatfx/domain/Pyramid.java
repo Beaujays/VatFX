@@ -1,9 +1,9 @@
 package vatfx.domain;
 
-public class Piramide extends Shape {
+public class Pyramid extends Shape {
 
     // region Constructor
-    public Piramide(String name, String shape,int volume, int length, int height, int depth){
+    public Pyramid(String name, String shape, int volume, int length, int height, int depth){
         super(name, shape, volume, length, height, depth);
     }
     // endregion

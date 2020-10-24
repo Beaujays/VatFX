@@ -10,16 +10,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import vatfx.service.ShapeInterface;
 
-public class InputCilinderView {
+public class InputCylinderView {
 
     private final ShapeInterface shapes;
 
-    public InputCilinderView(ShapeInterface shapes) {
+    public InputCylinderView(ShapeInterface shapes) {
         this.shapes = shapes;
     }
 
     public Parent getView() {
-        Label shapeText = new Label("Cilinder");
+        Label shapeText = new Label("Cylinder");
         shapeText.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
         Label nameText = new Label("Name: ");
         TextField nameField = new TextField();
@@ -34,7 +34,7 @@ public class InputCilinderView {
             try {
                 int radiusInt = Integer.parseInt(radiusField.getText());
                 int heightInt = Integer.parseInt(heightField.getText());
-                shapes.saveCilinder(nameField.getText(), "cilinder", radiusInt, heightInt);
+                shapes.saveCylinder(nameField.getText(), "Cylinder", radiusInt, heightInt);
                 message.setText(nameField.getText() + " is added successfully.");
                 nameField.clear();
                 radiusField.clear();

@@ -25,8 +25,8 @@ public class ExportFileView {
         ChoiceBox chooseShape = new ChoiceBox();
         chooseShape.getItems().add("cube");
         chooseShape.getItems().add("globe");
-        chooseShape.getItems().add("cilinder");
-        chooseShape.getItems().add("piramide");
+        chooseShape.getItems().add("cylinder");
+        chooseShape.getItems().add("pyramid");
         chooseShape.getItems().add("hemisphere");
         Label message = new Label();
 

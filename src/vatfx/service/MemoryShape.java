@@ -46,9 +46,9 @@ public class MemoryShape implements ObservableShape {
     }
 
     @Override
-    public void saveCilinder(String name, String shape, int value1, int value2) {
+    public void saveCylinder(String name, String shape, int value1, int value2) {
         double calculateCilinder = Math.PI * (value1 * value1) * value2;
-        shapeList.add(new Cilinder(name, shape, (int) calculateCilinder, value1, value2));
+        shapeList.add(new Cylinder(name, shape, (int) calculateCilinder, value1, value2));
 
         System.out.println("Saved: " + shape);
         System.out.println("List of shapes:");
@@ -58,9 +58,9 @@ public class MemoryShape implements ObservableShape {
     }
 
     @Override
-    public void savePiramide(String name, String shape, int value1, int value2, int value3) {
+    public void savePyramid(String name, String shape, int value1, int value2, int value3) {
         double calculatePiramide = (1.0 * (value1 * value2 * value3) / 2);
-        shapeList.add(new Piramide(name, shape, (int) calculatePiramide, value1, value2, value3));
+        shapeList.add(new Pyramid(name, shape, (int) calculatePiramide, value1, value2, value3));
 
         System.out.println("Saved: " + shape);
         System.out.println("List of shapes:");

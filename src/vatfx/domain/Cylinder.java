@@ -1,9 +1,9 @@
 package vatfx.domain;
 
-public class Cilinder extends Shape {
+public class Cylinder extends Shape {
 
     // region Constructor
-    public Cilinder(String name, String shape, int volume, int radius, int height) {
+    public Cylinder(String name, String shape, int volume, int radius, int height) {
         super(name, shape, volume, radius, height);
 
     }

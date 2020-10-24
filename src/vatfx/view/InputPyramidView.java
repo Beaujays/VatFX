@@ -10,16 +10,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
-public class InputPiramideView {
+public class InputPyramidView {
 
     private final ShapeInterface shapes;
 
-    public InputPiramideView(ShapeInterface shapes) {
+    public InputPyramidView(ShapeInterface shapes) {
         this.shapes = shapes;
     }
 
     public Parent getView() {
-        Label shapeText = new Label("Piramide");
+        Label shapeText = new Label("Pyramid");
         shapeText.setFont(Font.font("Verdana, FontWeight.BOLD", 30));
         Label nameText = new Label("Name: ");
         TextField nameField = new TextField();
@@ -31,13 +31,13 @@ public class InputPiramideView {
         TextField heightField = new TextField();
         Label message = new Label("");
 
-        Button addButton = new Button("Add Piramide!");
+        Button addButton = new Button("Add Pyramid!");
         addButton.setOnAction((event) -> {
             try {
                 int lengthInt = Integer.parseInt(lengthField.getText());
                 int depthInt = Integer.parseInt(depthField.getText());
                 int heightInt = Integer.parseInt(heightField.getText());
-                shapes.savePiramide(nameField.getText(), "piramide", lengthInt, depthInt, heightInt);
+                shapes.savePyramid(nameField.getText(), "pyramid", lengthInt, depthInt, heightInt);
                 message.setText(nameField.getText() + " is added successfully.");
                 nameField.clear();
                 lengthField.clear();

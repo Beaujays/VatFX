@@ -328,21 +328,21 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         return new Shape(name, shape, volume);
     }
 
-    Shape recordToEntityGlobe(ResultSet resultSet) throws SQLException {
+    Globe recordToEntityGlobe(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         int radius = resultSet.getInt("radius");
         double calculate = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
         return new Globe(name, "globe", (int) calculate, radius);
     }
 
-    Shape recordToEntityHemisphere(ResultSet resultSet) throws SQLException {
+    Hemisphere recordToEntityHemisphere(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         int radius = resultSet.getInt("radius");
         double calculate = (2.0 / 3.0) * Math.PI * Math.pow(radius, 3);
         return new Hemisphere(name, "globe", (int) calculate, radius);
     }
 
-    Shape recordToEntityCylinder(ResultSet resultSet) throws SQLException {
+    Cylinder recordToEntityCylinder(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         int radius = resultSet.getInt("radius");
         int height = resultSet.getInt("height");
@@ -350,7 +350,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         return new Cylinder(name, "Cylinder", (int) calculate, radius, height);
     }
 
-    Shape recordToEntityPyramid(ResultSet resultSet) throws SQLException {
+    Pyramid recordToEntityPyramid(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         int length = resultSet.getInt("length");
         int height = resultSet.getInt("height");
@@ -359,7 +359,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         return new Pyramid(name, "Pyramid",calculate, length, height, depth);
     }
 
-    Shape recordToEntityCube(ResultSet resultSet) throws SQLException {
+    Cube recordToEntityCube(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         int length = resultSet.getInt("length");
         int height = resultSet.getInt("height");
@@ -367,8 +367,5 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         int calculate = length * height * depth;
         return new Cube(name, "cube",calculate, length, height, depth);
     }
-
     //endregion
-
-
 }

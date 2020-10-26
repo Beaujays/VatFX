@@ -3,7 +3,7 @@ package vatfx.domain;
 import java.util.Objects;
 
 public class Shape {
-    //region Variables
+    //region Attributes
     final String name;
     final String shape;
     final int volume; //volume of a shape
@@ -12,19 +12,21 @@ public class Shape {
     int value3; //value 3 of a shape
     //endregion
 
-    // region Constructors
+    //region Constructors
+    //Constructor used for making shape for list
     public Shape(String name, String shape, int volume) {
         this.name = name;
         this.shape = shape;
         this.volume = volume;
     }
-
+    //Constructor used for making new Globe and Hemisphere
     public Shape(String name, String shape, int volume, int value1) {
         this.name = name;
         this.shape = shape;
         this.volume = volume;
         this.value1 = value1;
     }
+    //Constructor used for making new Cylinder
     public Shape(String name, String shape, int volume, int value1, int value2) {
         this.name = name;
         this.shape = shape;
@@ -32,7 +34,7 @@ public class Shape {
         this.value1 = value1;
         this.value2 = value2;
     }
-
+    //Constructor used for making new Cube and Pyramid
     public Shape(String name, String shape, int volume, int value1, int value2, int value3) {
         this.name = name;
         this.shape = shape;

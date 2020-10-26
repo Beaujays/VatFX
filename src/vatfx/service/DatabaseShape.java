@@ -27,7 +27,6 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
             statement.setString(2, shape);
             statement.setInt(3, value1);
             statement.setDouble(4, (4.0 / 3.0) * Math.PI * Math.pow(value1, 3));
-
             return statement.execute();
         });
     }
@@ -52,7 +51,6 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
             statement.setInt(4, value2);
             statement.setInt(5, value3);
             statement.setInt(6, (value1 * value2 * value3));
-
             return statement.execute();
         });
     }
@@ -64,7 +62,6 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
             statement.setInt(3, value1);
             statement.setInt(4, value2);
             statement.setDouble(5, (value1 * value1) * Math.PI * Math.pow(value2, 3));
-
             return statement.execute();
         });
     }
@@ -77,7 +74,6 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
             statement.setInt(5, value2);
             statement.setInt(6, value3);
             statement.setInt(7, (value1 * value2 * value3 / 2));
-
             return statement.execute();
         });
     }
@@ -336,14 +332,14 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         String name = resultSet.getString("name");
         int radius = resultSet.getInt("radius");
         double calculate = (4.0 / 3.0) * Math.PI * Math.pow(radius, 3);
-        return new Globe(name, "globe", radius, (int) calculate);
+        return new Globe(name, "globe", (int) calculate, radius);
     }
 
     Shape recordToEntityHemisphere(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
         int radius = resultSet.getInt("radius");
         double calculate = (2.0 / 3.0) * Math.PI * Math.pow(radius, 3);
-        return new Hemisphere(name, "globe", radius, (int) calculate);
+        return new Hemisphere(name, "globe", (int) calculate, radius);
     }
 
     Shape recordToEntityCylinder(ResultSet resultSet) throws SQLException {
@@ -351,7 +347,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         int radius = resultSet.getInt("radius");
         int height = resultSet.getInt("height");
         double calculate = (radius * radius) * Math.PI * Math.pow(height, 3);
-        return new Cylinder(name, "Cylinder", radius, height, (int) calculate);
+        return new Cylinder(name, "Cylinder", (int) calculate, radius, height);
     }
 
     Shape recordToEntityPyramid(ResultSet resultSet) throws SQLException {
@@ -360,7 +356,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         int height = resultSet.getInt("height");
         int depth = resultSet.getInt("depth");
         int calculate = length * height * depth / 2;
-        return new Pyramid(name, "Pyramid", length, height, depth, calculate);
+        return new Pyramid(name, "Pyramid",calculate, length, height, depth);
     }
 
     Shape recordToEntityCube(ResultSet resultSet) throws SQLException {
@@ -369,7 +365,7 @@ public class DatabaseShape extends AbstractDatabaseShape<Shape> implements Shape
         int height = resultSet.getInt("height");
         int depth = resultSet.getInt("depth");
         int calculate = length * height * depth;
-        return new Cube(name, "cube", length, height, depth, calculate);
+        return new Cube(name, "cube",calculate, length, height, depth);
     }
 
     //endregion
